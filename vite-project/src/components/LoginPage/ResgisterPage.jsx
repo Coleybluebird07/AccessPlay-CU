@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginPage.css'; // Import CSS file
 
-const LoginPage = () => {
+const RegisterPage = () => {
     // State to hold form data
     const [formData, setFormData] = useState({
         email: '',
@@ -21,25 +21,21 @@ const LoginPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Placeholder for soon to be functional registration.
-        console.log('Login attempted with:', formData);
-        alert(`Attempting to log in with Email: ${formData.email}`);
+        console.log('Register attempted with:', formData);
+        alert(`Attempting to register with Email: ${formData.email}`);
     };
 
     return (
-        // main html elements / structure
         <div className="body-container">
-            <div className="login-container"> 
+            <div className="login-container">
                 <div className="login-card">
-                    <h2 className="card-title">Login to AccessPlay</h2>
-                    <p className="card-subtitle">Enter your credentials to access your account</p>
+                    <h2 className="card-title">Register for AccessPlay</h2>
+                    <p className="card-subtitle">Create your account to get started</p>
 
-                    {/*Submitting data */}
                     <form onSubmit={handleSubmit}>
-                        {/* Email Input Group */}
+                        {/* required email inputs */}
                         <div className="form-group">
-                            {/* To ensure a valid / formatted email is entered*/} 
                             <label htmlFor="email">Email</label>
-                            {/*Required data*/}
                             <input 
                                 type="email" 
                                 id="email" 
@@ -51,11 +47,9 @@ const LoginPage = () => {
                             />
                         </div>
 
-                        {/* Password Input Group */}
+                        {/* required password inputs */}
                         <div className="form-group">
-                            {/* htmlFor set to password for censoring.*/}
                             <label htmlFor="password">Password</label>
-                            {/*Required data*/}
                             <input 
                                 type="password" 
                                 id="password" 
@@ -68,12 +62,12 @@ const LoginPage = () => {
                         </div>
 
                         <button type="submit" className="login-button">
-                            Login
+                            Register
                         </button>
                     </form>
-                    {/*Link to register page*/}
-                    <p className="register-link-container">
-                        Don't have an account? <a href="/register" className="register-link">Register here</a>
+                    {/*Link to login page*/}
+                    <p className="register-link-container"> 
+                        Already have an account? <a href="/" className="register-link">Login here</a>
                     </p>
                 </div>
             </div>
@@ -81,4 +75,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default RegisterPage;

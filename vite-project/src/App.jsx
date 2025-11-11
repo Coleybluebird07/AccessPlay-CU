@@ -1,15 +1,14 @@
 import React from 'react';
-import LoginPage from './components/LoginPage/LoginPage'; // Adjust path as needed
+import LoginPage from './components/LoginPage/LoginPage';
+import RegisterPage from './components/LoginPage/ResgisterPage';
 
 function App() {
-  return (
-    <div className="App">
-      {/* In a real application, you'd use a router here to conditionally 
-        render the Login Page based on the user's logged-in status or route.
-      */}
-      <LoginPage />
-    </div>
-  );
+  // Simple routing based on window.location.pathname
+  if (window.location.pathname === '/register') {
+    return <RegisterPage />;
+  }
+  // Default to login page
+  return <LoginPage />;
 }
 
 export default App;
