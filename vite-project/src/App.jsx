@@ -13,6 +13,6 @@ export default function App() {
   if (window.location.pathname === '/login') {
     return <LoginPage />;
   }
-  // Default to login page
+  // Default to login page .
   return <LandingPage />;
 }
