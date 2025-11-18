@@ -1,0 +1,219 @@
+:root{
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --background-color: #f9fafb;
+    --text-color: #111827;
+    --border-color: #e5e7eb;
+    --hover-bg-color: #f3f4f6;
+    --font-family: "Inter", Arial, sans-serif;
+    --footer_height: 160px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container layout */
+.container {
+    font-family: var(--font-family), Arial, sans-serif;
+    background-color: #f9fafb;
+    color: #111827;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100vw;
+    min-height: calc(100vh - var(--footer_height));
+    gap: 24px;
+    box-sizing: border-box;
+    padding: 0 0 var(--footer_height);
+}
+
+/* Sidebar filters */
+.filters {
+    width: 250px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.filters h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.filters input[type="checkbox"] {
+    margin: 0;
+    accent-color: var(--primary-color);
+}
+
+.separator{
+    border-top: 1px solid #dddddd;
+    margin: 16px 0;
+}
+
+/* Main area */
+.main_game_area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header h4:first-child{
+    font-size: medium;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #787878;
+}
+
+.header h4:last-child{
+    font-size: large;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #787878;
+}
+
+/* Search bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 16px 0 24px;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s ease;
+}
+
+.search-input::placeholder {
+    color: #000000;
+}
+
+.search-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* Game grid */
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    gap: 24px;
+}
+
+.game {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.game img {
+    width: 100%;
+    height: 160px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 12px;
+}
+
+.game-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+
+.game-description {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.game-meta {
+    font-size: 0.85rem;
+    color: #777;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Scrollbars */
+.filters::-webkit-scrollbar, .game::-webkit-scrollbar {
+    width: 8px;
+}
+.filters::-webkit-scrollbar-thumb, .game::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        padding: 16px;
+    }
+    .filters {
+        width: 100%;
+        position: relative;
+        top: auto;
+        border: none;
+        background: none;
+        padding: 0;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .filters { display: none; }
+    .filters.collapsed { display: block; }
+}
+
+footer {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    color: #555;
+    text-align: center;
+    padding: 40px 16px 32px 16px;
+    font-size: 1rem;
+    border-top: 1px solid #e5e7eb;
+    z-index: 50;
+    box-sizing: border-box;
+}
+footer .footer-title {
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 8px;
+}
+footer .footer-note {
+    margin-bottom: 8px;
+}
