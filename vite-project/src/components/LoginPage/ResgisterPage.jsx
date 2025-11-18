@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
 import './LoginPage.css'; // Import CSS file
 
-// === BACKEND CONFIG================================
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
-// ==========================================================================
-
 const RegisterPage = () => {
     // State to hold form data
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
-
-// State for showing user feedback / success / error messages
-    const [message, setMessage] = useState('');
-    const [loading, setLoading] = useState(false);
-
-
 
     // Handle input changes
     const handleChange = (e) => {
@@ -27,23 +17,12 @@ const RegisterPage = () => {
         }));
     };
 
-// Handle form submission
-    const handleSubmit = async (e) => {
+    // Handle form submission
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const res = await fetch(`${API_URL}/api/auth/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData), // { email, password }
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data?.error || 'Registration failed');
-            alert('Registered! Redirecting to login…');
-            window.location.href = '/'; // change target if needed
-        } catch (err) {
-            console.error('[Register] error:', err);
-            alert(err.message || 'Registration failed');
-        }
+        // Placeholder for soon to be functional registration.
+        console.log('Register attempted with:', formData);
+        alert(`Attempting to register with Email: ${formData.email}`);
     };
 
     return (
