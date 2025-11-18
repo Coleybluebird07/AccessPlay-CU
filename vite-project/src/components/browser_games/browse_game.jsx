@@ -1,9 +1,9 @@
 import React from "react";
 import "./browse_game.css";
 
-
-const Browse_games = () => {
+export default function Browse_games() {
     return (
+        <div>
         <div className="container">
             {/* Sidebar Filters */}
             <div className="filters">
@@ -75,9 +75,7 @@ const Browse_games = () => {
                 </form>
             </div>
 
-
-            {/* Main Body */}
-            <div className="main_body">
+            <div className="main_game_area">
                 <div className="header">
                     <h4>Browse Games</h4>
                     <h4>
@@ -95,33 +93,51 @@ const Browse_games = () => {
                         placeholder="Search for games..."
                     />
                 </div>
-
-
                 <div className="game-list">
-                    {/* Game items will be dynamically inserted here */}
+                    <div className="game">
+                        <img src="example.jpg" alt="Game" />
+                        <div className="game-title">Wordscape Journey</div>
+                        <div className="game-description">A relaxing word puzzle game...</div>
+                        <div className="game-meta">
+                            <span>⭐ 4.7</span>
+                            <span>10M+ downloads</span>
+                        </div>
+                    </div>
+                    <div className="game">
+                        <img src="example.jpg" alt="Game" />
+                        <div className="game-title">Wordscape Journey</div>
+                        <div className="game-description">A relaxing word puzzle game...</div>
+                        <div className="game-meta">
+                            <span>⭐ 4.7</span>
+                            <span>10M+ downloads</span>
+                        </div>
+                    </div>
+                    <div className="game">
+                        <img src="example.jpg" alt="Game" />
+                        <div className="game-title">Wordscape Journey</div>
+                        <div className="game-description">A relaxing word puzzle game...</div>
+                        <div className="game-meta">
+                            <span>⭐ 4.7</span>
+                            <span>10M+ downloads</span>
+                        </div>
+                    </div>
+                    <div className="game">
+                        <img src="example.jpg" alt="Game" />
+                        <div className="game-title">Wordscape Journey</div>
+                        <div className="game-description">A relaxing word puzzle game...</div>
+                        <div className="game-meta">
+                            <span>⭐ 4.7</span>
+                            <span>10M+ downloads</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    );
-};
-
-
-const Footer = () => (
-    <footer>
-        <div className="footer-title">AccessPlay - Discover Accessible Mobile Games</div>
-        <div className="footer-note">Built with accessibility in mind. WCAG AA compliant with voice control support.</div>
-        <div>&copy; {new Date().getFullYear()} AccessPlay. All rights reserved.</div>
-    </footer>
-);
-
-
-export default function Browse_games_page() {
-    return (
-        <div>
-            <main>
-                <Browse_games />
-            </main>
-            <Footer />
+        <footer>
+            <div className="footer-title">AccessPlay - Discover Accessible Mobile Games</div>
+            <div className="footer-note">Built with accessibility in mind. WCAG AA compliant with voice control support.</div>
+            <div>&copy; {new Date().getFullYear()} AccessPlay. All rights reserved.</div>
+        </footer>
         </div>
     );
 }

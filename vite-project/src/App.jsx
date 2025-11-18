@@ -4,7 +4,7 @@ import React from 'react';
 import LandingPage from './LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/LoginPage/ResgisterPage';
-import Browse_games_page from './components/browser_games/browse_game';
+import Browse_games from './components/browser_games/browse_game';
 import './landing-page.css';
 import './navbar.css';
 import './components/browser_games/browse_game.css';
@@ -29,7 +29,7 @@ export default function App() {
       {path === "/register" && <RegisterPage />}
       {path === "/login" && <LoginPage />}
       {path === "/" && <LandingPage />}
-      {path === "/browse-games" && <Browse_games_page />}
+      {path === "/browse-games" && <Browse_games />}
     </div>
 
   </>

@@ -9,20 +9,32 @@
     --footer_height: 160px;
 }
 
-.container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    background-color: #f9fafb;
-    color: #111827;
-    font-family: var(--font-family), serif;
-    gap: 24px;
-    min-height: calc(100vh - var(--footer_height));
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-    padding-bottom: var(--footer_height);
+    margin: 0;
+    padding: 0;
 }
 
+/* Container layout */
+.container {
+    font-family: var(--font-family), Arial, sans-serif;
+    background-color: #f9fafb;
+    color: #111827;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100vw;
+    min-height: calc(100vh - var(--footer_height));
+    gap: 24px;
+    box-sizing: border-box;
+    padding: 0 0 var(--footer_height);
+}
 
+/* Sidebar filters */
 .filters {
     width: 250px;
     background: #fff;
@@ -41,18 +53,6 @@
     margin-bottom: 12px;
 }
 
-.filters {
-    width: 250px;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 16px;
-    position: sticky;
-    top: 100px;
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-}
-
 .filters input[type="checkbox"] {
     margin: 0;
     accent-color: var(--primary-color);
@@ -63,20 +63,14 @@
     margin: 16px 0;
 }
 
-.game{
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 16px;
-    box-sizing: border-box;
+/* Main area */
+.main_game_area {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transition: box-shadow 0.2s ease;
-    overflow-y: auto;
 }
 
+/* Header */
 .header h4:first-child{
     font-size: medium;
     font-weight: 700;
@@ -91,6 +85,7 @@
     color: #787878;
 }
 
+/* Search bar */
 .search-bar {
     display: flex;
     align-items: center;
@@ -120,24 +115,22 @@
     outline: none;
 }
 
-
+/* Game grid */
 .game-list {
-    flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
     gap: 24px;
 }
 
 .game {
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 16px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .game:hover {
@@ -173,7 +166,7 @@
     width: 100%;
 }
 
-
+/* Scrollbars */
 .filters::-webkit-scrollbar, .game::-webkit-scrollbar {
     width: 8px;
 }
@@ -204,7 +197,6 @@
 }
 
 footer {
-    position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
