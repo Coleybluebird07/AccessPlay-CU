@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import './LoginPage.css'; // Import CSS file
 
+// === BACKEND CONFIG ================================
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+// ==========================================================================
+
+
 const LoginPage = () => {
     // State to hold form data
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
+
+    // State for showing user feedback / success / error messages
+    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     // Handle input changes
     const handleChange = (e) => {
@@ -17,13 +26,42 @@ const LoginPage = () => {
         }));
     };
 
-    // Handle form submission
-    const handleSubmit = (e) => {
+    // === LOGIN HANDLER (main backend connection block) ======================
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Placeholder for soon to be functional registration.
-        console.log('Login attempted with:', formData);
-        alert(`Attempting to log in with Email: ${formData.email}`);
+        setMessage('');
+        setLoading(true);
+
+        try {
+            const res = await fetch(`${API_URL}/api/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData) // { email, password }
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data?.error || 'Login failed');
+            }
+
+            // Success — save token for future authenticated requests
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('userEmail', data.user.email);
+
+            setMessage('Login successful! Redirecting...');
+            console.log('[Login] success:', data);
+
+            // Redirect to home/dashboard
+            window.location.href = '/';
+        } catch (err) {
+            console.error('[Login] error:', err);
+            setMessage(err.message || 'Login failed');
+        } finally {
+            setLoading(false);
+        }
     };
+    // ========================================================================
 
     return (
         // main html elements / structure
