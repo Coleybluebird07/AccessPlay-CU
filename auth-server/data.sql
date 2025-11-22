@@ -79,3 +79,11 @@ VALUES
     (3, 10), -- Educational
     (3, 11); -- Trivia
 
+INSERT INTO game_images (game_id, image_url)
+VALUES
+    (1, 'https://example.com/images/game1_img1.jpg'),
+    (1, 'https://example.com/images/game1_img2.jpg'),
+    (2, 'https://example.com/images/game2_img1.jpg'),
+    (2, 'https://example.com/images/game2_img2.jpg'),
+    (3, 'https://example.com/images/game3_img1.jpg');
+
