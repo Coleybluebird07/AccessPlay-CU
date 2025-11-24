@@ -37,4 +37,47 @@ router.get("/", async (req, res) => {
     }
 });
 
+// get game by id
+router.get("/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const game = await withConn(async (conn) => {
+            const rows = await conn.query(`
+                SELECT g.*,
+                       (SELECT JSON_ARRAYAGG(image_url) FROM game_images WHERE game_id = g.game_id) AS images,
+                       (SELECT JSON_ARRAYAGG(genres.genre_name)
+                        FROM game_genres
+                                 JOIN genres ON game_genres.genre_id = genres.genre_id
+                        WHERE game_genres.game_id = g.game_id) AS genres
+                FROM games g
+                WHERE g.game_id = ?
+            `, [id]);
+
+            if (!rows[0]) return null;
+
+            const row = rows[0];
+
+            // Convert ALL BigInts to strings
+            for (let key in row) {
+                if (typeof row[key] === "bigint") {
+                    row[key] = row[key].toString();
+                }
+            }
+
+            return row;
+        });
+
+        if (!game) {
+            return res.status(404).json({ error: "Game not found" });
+        }
+
+        res.json(game);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Database error" });
+    }
+});
+
 export default router;

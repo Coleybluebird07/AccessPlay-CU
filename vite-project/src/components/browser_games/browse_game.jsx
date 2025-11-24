@@ -1,18 +1,33 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./browse_game.css";
 
 export default function Browse_games() {
-    const [games, setGames] = React.useState([]);
+    const [games, setGames] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch("http://localhost:4000/api/games")
             .then((response) => response.json())
             .then((data) => {
                 console.log("Fetched games:", data);
-                setGames(data);
+
+                // Ensure we always have an array
+                if (Array.isArray(data)) {
+                    setGames(data);
+                } else if (data.games && Array.isArray(data.games)) {
+                    setGames(data.games);
+                } else {
+                    setGames([]);
+                }
             })
-            .catch((error) => console.error("Error fetching games:", error));
+            .catch((error) => {
+                console.error("Error fetching games:", error);
+                setGames([]); // fallback
+            })
+            .finally(() => setLoading(false));
     }, []);
+
     return (
         <div>
             <div className="container">
@@ -47,9 +62,7 @@ export default function Browse_games() {
                         ))}
                     </form>
 
-
                     <div className="separator"></div>
-
 
                     <h5>Accessibility Features</h5>
                     <form className="accessibility_form" id="accessibility_form">
@@ -86,6 +99,7 @@ export default function Browse_games() {
                     </form>
                 </div>
 
+                {/* Main Game Area */}
                 <div className="main_game_area">
                     <div className="header">
                         <h4>Browse Games</h4>
@@ -95,7 +109,6 @@ export default function Browse_games() {
                         </h4>
                     </div>
 
-
                     <div className="search-bar" id="search-bar">
                         <input
                             type="text"
@@ -104,28 +117,41 @@ export default function Browse_games() {
                             placeholder="Search for games..."
                         />
                     </div>
+
                     <div className="game-list">
-                        {games.length === 0 ? (
+                        {loading ? (
+                            <div>Loading games...</div>
+                        ) : games.length === 0 ? (
                             <div>No games found.</div>
                         ) : (
                             games.map((game) => (
-                                <div key={game.game_id} className="game">
-                                    <img src={game.images?.[0] ?? "placeholder.jpg"} alt={game.name} />
-                                    <div className="game-title">{game.name}</div>
-                                    <div className="game-description">{game.short_description}</div>
-                                    <div className="game-meta">
-                                        <span>{game.genres?.join(", ")}</span>
-                                        <span>{game.platform}</span>
+                                <Link to={`/games/${game.game_id}`} key={game.game_id} className="game">
+                                    <img
+                                        src={game.images?.[0] ?? "placeholder.jpg"}
+                                        alt={game.name ?? "Unnamed Game"}
+                                    />
+                                    <div className="game-title">{game.name ?? "Unnamed Game"}</div>
+                                    <div className="game-description">
+                                        {game.short_description ?? "No description available."}
                                     </div>
-                                </div>
+                                    <div className="game-meta">
+                                        <span>{game.genres?.join(", ") ?? "No genres"}</span>
+                                        <span>{game.platform ?? "Unknown platform"}</span>
+                                    </div>
+                                </Link>
                             ))
                         )}
                     </div>
                 </div>
             </div>
+
             <footer>
-                <div className="footer-title">AccessPlay - Discover Accessible Mobile Games</div>
-                <div className="footer-note">Built with accessibility in mind. WCAG AA compliant with voice control support.</div>
+                <div className="footer-title">
+                    AccessPlay - Discover Accessible Mobile Games
+                </div>
+                <div className="footer-note">
+                    Built with accessibility in mind. WCAG AA compliant with voice control support.
+                </div>
                 <div>&copy; {new Date().getFullYear()} AccessPlay. All rights reserved.</div>
             </footer>
         </div>
