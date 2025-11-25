@@ -217,3 +217,13 @@ footer .footer-title {
 footer .footer-note {
     margin-bottom: 8px;
 }
+
+.favourite-button {
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.85rem;
+}

@@ -1,7 +1,24 @@
-import React from "react";
+import React , { useState, useEffect } from "react";
 import "./browse_game.css";
+import {getFavouriteGames, toggleFavouriteGame} from "../../favouritesUtils";
 
 export default function Browse_games() {
+    const [favourites, setFavourites] = useState([]);
+
+    useEffect(() => {
+        // Load favourites from localStorage when the page loads
+        setFavourites(getFavouriteGames());
+    }, []);
+
+    function handleToggleFavourite(name) {
+        const updated = toggleFavouriteGame(name);
+        setFavourites(updated);
+    }
+
+    function isFavourite(name) {
+        return favourites.includes(name);
+    }
+
     return (
         <div>
         <div className="container">
@@ -101,43 +118,81 @@ export default function Browse_games() {
                         <div className="game-meta">
                             <span>⭐ 4.7</span>
                             <span>10M+ downloads</span>
+                            <button
+                                type="button"
+                                className="favourite-button"
+                                onClick={() => handleToggleFavourite("Wordscape Journey1")}
+                            >
+                                {isFavourite("Wordscape Journey1")
+                                    ? "♥ Favourited"
+                                    : "♡ Add to favourites"}
+                            </button>
                         </div>
                     </div>
                     <div className="game">
-                        <img src="example.jpg" alt="Game" />
+                        <img src="example.jpg" alt="Game"/>
                         <div className="game-title">Wordscape Journey</div>
                         <div className="game-description">A relaxing word puzzle game...</div>
                         <div className="game-meta">
                             <span>⭐ 4.7</span>
                             <span>10M+ downloads</span>
+                            <button
+                                type="button"
+                                className="favourite-button"
+                                onClick={() => handleToggleFavourite("Wordscape Journey2")}
+                            >
+                                {isFavourite("Wordscape Journey2")
+                                    ? "♥ Favourited"
+                                    : "♡ Add to favourites"}
+                            </button>
                         </div>
                     </div>
                     <div className="game">
-                        <img src="example.jpg" alt="Game" />
+                        <img src="example.jpg" alt="Game"/>
                         <div className="game-title">Wordscape Journey</div>
                         <div className="game-description">A relaxing word puzzle game...</div>
                         <div className="game-meta">
                             <span>⭐ 4.7</span>
                             <span>10M+ downloads</span>
+                            <button
+                                type="button"
+                                className="favourite-button"
+                                onClick={() => handleToggleFavourite("Wordscape Journey3")}
+                            >
+                                {isFavourite("Wordscape Journey3")
+                                    ? "♥ Favourited"
+                                    : "♡ Add to favourites"}
+                            </button>
                         </div>
                     </div>
                     <div className="game">
-                        <img src="example.jpg" alt="Game" />
+                        <img src="example.jpg" alt="Game"/>
                         <div className="game-title">Wordscape Journey</div>
                         <div className="game-description">A relaxing word puzzle game...</div>
                         <div className="game-meta">
                             <span>⭐ 4.7</span>
                             <span>10M+ downloads</span>
+                            <button
+                                type="button"
+                                className="favourite-button"
+                                onClick={() => handleToggleFavourite("Wordscape Journey4")}
+                            >
+                                {isFavourite("Wordscape Journey4")
+                                    ? "♥ Favourited"
+                                    : "♡ Add to favourites"}
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer>
-            <div className="footer-title">AccessPlay - Discover Accessible Mobile Games</div>
-            <div className="footer-note">Built with accessibility in mind. WCAG AA compliant with voice control support.</div>
-            <div>&copy; {new Date().getFullYear()} AccessPlay. All rights reserved.</div>
-        </footer>
+            <footer>
+                <div className="footer-title">AccessPlay - Discover Accessible Mobile Games</div>
+                <div className="footer-note">Built with accessibility in mind. WCAG AA compliant with voice control
+                    support.
+                </div>
+                <div>&copy; {new Date().getFullYear()} AccessPlay. All rights reserved.</div>
+            </footer>
         </div>
     );
 }

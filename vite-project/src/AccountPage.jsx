@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getToken, logout } from "./authUtils";
+import { getFavouriteGames } from "./favouritesUtils";
 import "./account.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
@@ -8,6 +9,7 @@ export default function AccountPage() {
     const [status, setStatus] = useState("loading");
     const [user, setUser] = useState(null);
     const [error, setError] = useState("");
+    const [favourites, setFavourites] = useState([]);
 
     // Change password
     const [currentPassword, setCurrentPassword] = useState("");
@@ -55,6 +57,7 @@ export default function AccountPage() {
 
                 setUser(data.user);
                 setStatus("ready");
+                setFavourites(getFavouriteGames());
             } catch (err) {
                 console.error("ME error:", err);
                 setError("Could not load account.");
@@ -305,6 +308,19 @@ export default function AccountPage() {
                             </form>
                         </div>
                     </div>
+                </div>
+
+                <div className="account-favourites">
+                    <h2>Your favourite games</h2>
+                    {favourites.length === 0 ? (
+                        <p>You haven’t favourited any games yet. Go to Browse Games to add some.</p>
+                    ) : (
+                        <ul>
+                            {favourites.map((name) => (
+                                <li key={name}>{name}</li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
 
                 <button className="logout-button" onClick={logout}>
