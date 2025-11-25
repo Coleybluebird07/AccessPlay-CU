@@ -196,7 +196,7 @@ export default function AccountPage() {
     }
 
     const memberSince = user?.created_at
-        ? new Date(user.created_at).toLocaleString()
+        ? new Date(user.created_at).toLocaleDateString()
         : "Unknown";
 
     return (
