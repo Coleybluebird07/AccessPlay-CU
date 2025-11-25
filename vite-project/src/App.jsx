@@ -7,35 +7,62 @@ import RegisterPage from "./components/LoginPage/ResgisterPage";
 import Browse_games from "./components/browser_games/browse_game";
 import GameProfile from "./components/game_profile/game_profile.jsx";
 
-import "./landing-page.css";
-import "./navbar.css";
-import "./components/browser_games/browse_game.css";
-import "./components/game_profile/game_profile.css";
+import LandingPage from './LandingPage';
+import LoginPage from './components/LoginPage/LoginPage';
+import RegisterPage from './components/LoginPage/ResgisterPage';
+import Browse_games from './components/browser_games/browse_game';
+import './landing-page.css';
+import './navbar.css';
+import './components/browser_games/browse_game.css';
+import AccountPage from "./AccountPage";
+import { isLoggedIn, getUserEmail, logout } from "./authUtils";
+
 
 export default function App() {
-    return (
-        <Router>
-            <div className="navbar">
-                <Link to="/" className="nav-logo">AccessPlay</Link>
-                <div className="nav-links">
-                    <Link to="/">Home</Link>
-                    <Link to="/browse-games">Browse Games</Link>
-                    <Link to="/login">Login</Link>
-                    <Link to="/register" className="nav-button">Register</Link>
-                </div>
-            </div>
+  const path = window.location.pathname;
+  const loggedIn = isLoggedIn();
+  const email = getUserEmail();
 
-            <div className="page-wrapper">
-                <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/browse-games" element={<Browse_games />} />
-                    <Route path="/games/:id" element={<GameProfile />} />
-                    {/* Optional: 404 route */}
-                    <Route path="*" element={<div>Page not found</div>} />
-                </Routes>
-            </div>
-        </Router>
-    );
+
+  return (
+      <>
+        <div className="nav-links">
+          <a href="/browse-games">Browse games</a>
+
+          {!loggedIn && (
+              <>
+                <a href="/login">Login</a>
+                <a href="/register" className="nav-button">
+                  Register
+                </a>
+              </>
+          )}
+
+          {loggedIn && (
+              <>
+                <span className="nav-user">Hi, {email}</span>
+                <a href="/account">My Account</a>
+                <button
+                    type="button"
+                    className="nav-button"
+                    onClick={logout}
+                    style={{border: "none", cursor: "pointer"}}
+                >
+                  Logout
+                </button>
+              </>
+          )}
+        </div>
+
+
+        <div className="page-wrapper">
+          {path === "/register" && <RegisterPage/>}
+          {path === "/login" && <LoginPage/>}
+          {path === "/" && <LandingPage/>}
+          {path === "/browse-games" && <Browse_games/>}
+          {path === "/account" && <AccountPage />}
+        </div>
+
+      </>
+  );
 }
