@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import authRouter from "./auth.js";
+import gamesRouter from "./games.js";
 
 dotenv.config();
 
@@ -18,9 +19,14 @@ app.use(morgan("dev"));
 
 app.get("/health", (req, res) => res.json({ ok: true }));
 app.use("/api/auth", authRouter);
+app.use("/api/games", gamesRouter);
 
 app.use((req, res) => res.status(404).json({ ok: false, error: "Not found" }));
 
-app.listen(port, () => {
-  console.log(`Auth server listening on http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`Auth server listening on http://localhost:${port}`);
+  });
+}
+
+export default app;

@@ -1,5 +1,11 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
+import LandingPage from "./LandingPage";
+import LoginPage from "./components/LoginPage/LoginPage";
+import RegisterPage from "./components/LoginPage/ResgisterPage";
+import Browse_games from "./components/browser_games/browse_game";
+import GameProfile from "./components/game_profile/game_profile.jsx";
 
 import LandingPage from './LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
