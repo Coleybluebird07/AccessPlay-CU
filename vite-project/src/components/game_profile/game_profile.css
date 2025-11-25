@@ -180,6 +180,19 @@ html, body {
     .profile-content {
         gap: 20px;
     }
+    .profile-content {
+        display: block;
+    }
+    .left-column, .right-column {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+    .hero-title {
+        font-size: 22px;
+    }
+    .download-btn {
+        width: 100%;
+    }
 }
 
 /* --- Reviews Section --- */

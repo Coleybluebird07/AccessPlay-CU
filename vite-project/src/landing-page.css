@@ -182,3 +182,29 @@ body, html {
 .landing-footer .footer-note {
   margin-bottom: 8px;
 }
+
+@media (max-width: 640px) {
+  .landing-hero .hero-title {
+    font-size: 20px;
+    line-height: 1.4;
+  }
+  .hero-sub {
+    font-size: 14px;
+  }
+  .hero-btn {
+    width: 100%;
+  }
+  .landing-features {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+  .landing-feature-card {
+    padding: 12px;
+  }
+  .landing-cta .cta-title {
+    font-size: 22px;
+  }
+  .landing-access-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
