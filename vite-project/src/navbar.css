@@ -1,7 +1,7 @@
 .navbar {
   background-color: #ffffff;
   border-bottom: 2px solid #e5edff;
-  padding: 15px 40px;     
+  padding: 10px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,7 +9,8 @@
   top: 0;
   width: 100%;
   z-index: 100;
-  box-sizing: border-box;   
+  box-sizing: border-box;
+  gap: 12px;
 }
 
 .nav-logo {
@@ -22,28 +23,30 @@
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 25px;   
+  gap: 25px;
 }
 
 .nav-links a {
   text-decoration: none;
   font-weight: 500;
   color: #1e3a8a;
-  padding: 6px 10px;     
+  padding: 10px 14px;
   border-radius: 4px;
+  font-size: 16px;
 }
 
 .nav-links a:hover {
-  background: #f0f5ff;   
+  background: #f0f5ff;
   color: #3b82f6;
 }
 
 .nav-button {
   background-color: #2563eb;
   color: white !important;
-  padding: 6px 16px;
+  padding: 10px 14px;
   border-radius: 6px;
   font-weight: 600;
+  font-size: 16px;
 }
 
 .nav-button:hover {
@@ -52,4 +55,20 @@
 
 .page-wrapper {
   padding-top: 90px;
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .nav-logo {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
 }
