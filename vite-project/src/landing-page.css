@@ -183,6 +183,8 @@ body, html {
   margin-bottom: 8px;
 }
 
+
+/*adding responsiveness for smaller devices.*/
 @media (max-width: 640px) {
   .landing-hero .hero-title {
     font-size: 20px;
