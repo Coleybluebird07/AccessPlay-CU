@@ -1,6 +1,7 @@
 import mariadb from "mariadb";
 import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
+dotenv.config({ path: path.resolve(process.cwd(), "../.env") });
 
 export const pool = mariadb.createPool({
   host: process.env.DB_HOST || "localhost",
@@ -17,6 +18,6 @@ export async function withConn(fn) {
     conn = await pool.getConnection();
     return await fn(conn);
   } finally {
-    if (conn) conn.release();
+    if (conn) await conn.release();
   }
 }
