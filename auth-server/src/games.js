@@ -80,4 +80,39 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+// get game reviews
+router.get("/:id/reviews", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const reviews = await withConn(async (conn) => {
+            const rows = await conn.query(`
+                SELECT
+                    r.review_id,
+                    r.user_id,
+                    r.rating,
+                    r.comment,
+                    r.created_at,
+                    u.email AS reviewer_email
+                FROM reviews r
+                         JOIN users u ON r.user_id = u.id   -- FIXED HERE
+                WHERE r.game_id = ?
+                ORDER BY r.created_at DESC
+            `, [id]);
+
+            // Convert BigInts
+            return rows.map(row => ({
+                ...row,
+                review_id: row.review_id?.toString() ?? row.review_id,
+                user_id: row.user_id?.toString() ?? row.user_id
+            }));
+        });
+
+        res.json(reviews);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Database error" });
+    }
+});
+
 export default router;

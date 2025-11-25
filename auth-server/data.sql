@@ -1,5 +1,7 @@
 USE `group7_auth`;
 
+
+
 INSERT INTO genres (genre_name) VALUES
                                     ('Puzzle'),
                                     ('Adventure'),
@@ -86,4 +88,30 @@ VALUES
     (2, 'https://example.com/images/game2_img1.jpg'),
     (2, 'https://example.com/images/game2_img2.jpg'),
     (3, 'https://example.com/images/game3_img1.jpg');
+
+
+INSERT INTO users (email, password_hash, created_at) VALUES
+                                                         ('user10@example.com', '$2y$10$A1b2C3d4E5f6G7h8I9j0kLmNOpQrStUvWxYz1234567890abcd', '2025-01-01 10:00:00'),
+                                                         ('user11@example.com', '$2y$10$Z9y8X7w6V5u4T3s2R1q0pOnMlKjIhHgFeDcBa9876543210zyxw', '2025-01-01 10:05:00'),
+                                                         ('user12@example.com', '$2y$10$PpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHh1234567890ab', '2025-01-01 10:10:00'),
+                                                         ('user14@example.com', '$2y$10$M1n2B3v4C5x6N7m8Z9p0LqRrStUvWxYzAaBbCcDdEeFfGgHhIi', '2025-01-01 10:15:00'),
+                                                         ('user15@example.com', '$2y$10$QqWwEeRrTtYyUuIiOoPpAaSsDdFfGgHhJjKk1234567890bb', '2025-01-01 10:20:00'),
+                                                         ('user17@example.com', '$2y$10$LkJjHhGgFfDdSsAaPpOoIiUuYyTtRrEeWwQq0987654321mm', '2025-01-01 10:25:00'),
+                                                         ('user18@example.com', '$2y$10$AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRr1234567890cc', '2025-01-01 10:30:00'),
+                                                         ('user22@example.com', '$2y$10$TtRrEeWwQqYyUuIiOoPpAaSsDdFfGgHhJjKk0987654321dd', '2025-01-01 10:35:00');
+
+
+INSERT INTO reviews (game_id, user_id, rating, comment, created_at) VALUES
+                                                                        (1, 1, 5, 'Amazing game! Great graphics and smooth gameplay. Highly recommend.', '2025-01-02 14:20:10'),
+                                                                        (1, 4, 4, 'Very enjoyable overall, but levels get repetitive.', '2025-01-05 09:42:33'),
+                                                                        (1, 7, 3, 'Decent but could use more content.', '2025-01-07 17:20:55'),
+
+                                                                        (2, 8, 5, 'Absolutely loved it! Storyline was super immersive.', '2025-01-03 11:30:45'),
+                                                                        (2, 3, 2, 'Not really my type of game. Controls felt clunky.', '2025-01-08 08:22:11'),
+                                                                        (2, 2, 4, 'Pretty fun and the music is great.', '2025-01-09 21:15:37'),
+
+                                                                        (3, 3, 3, 'Good concept but has some bugs.', '2025-01-10 12:10:18'),
+                                                                        (3, 4, 4, 'Enjoyable and unique mechanics. Worth trying.', '2025-01-11 16:49:02'),
+                                                                        (3, 5, 5, 'One of the best games I’ve played this year!', '2025-01-12 19:04:29');
+
 

@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./game_profile.css";
 
 export default function GameProfile() {
     const { id } = useParams();
     const [game, setGame] = useState(null);
+    const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
         fetch(`http://localhost:4000/api/games/${id}`)
@@ -12,6 +13,13 @@ export default function GameProfile() {
             .then(data => setGame(data))
             .catch(err => console.error(err));
     }, [id]);
+
+    useEffect(() => {
+        fetch(`http://localhost:4000/api/games/${id}/reviews`)
+            .then(res => res.json())
+            .then(data => setReviews(data))
+            .catch(err => console.error(err));
+    },[id]);
 
     if (!game) return <div className="loading">Loading...</div>;
 
@@ -88,7 +96,34 @@ export default function GameProfile() {
                     </div>
                 </div>
 
+                {/* Reviews Section */}
+                <div className="reviews-section">
+                    <h2>User Reviews</h2>
+                    {reviews && reviews.length > 0 ? (
+                        reviews.map((review) => (
+                            <div key={review.review_id} className="review-card">
+                                <div className="review-header">
+                                    <span className="review-author"> {review.reviewer_email}</span>
+                                    <span className="review-rating">{"⭐".repeat(review.rating)}</span>
+                                </div>
+                                <p className="review-text">{review.comment}</p>
+                                <span className="review-date">{new Date(review.created_at).toLocaleDateString()}</span>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="no-reviews">No reviews yet. Be the first to review!</p>
+                    )}
+                </div>
             </div>
+            <footer>
+                <div className="footer-title">
+                    AccessPlay - Discover Accessible Mobile Games
+                </div>
+                <div className="footer-note">
+                    Built with accessibility in mind. WCAG AA compliant with voice control support.
+                </div>
+                <div>&copy; {new Date().getFullYear()} AccessPlay. All rights reserved.</div>
+            </footer>
         </div>
     );
 }

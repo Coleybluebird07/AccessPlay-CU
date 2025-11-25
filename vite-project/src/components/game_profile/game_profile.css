@@ -181,3 +181,73 @@ html, body {
         gap: 20px;
     }
 }
+
+/* --- Reviews Section --- */
+.reviews-section {
+    margin: 40px 0;
+    width: 100%;
+}
+
+.reviews-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.review-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.review-author {
+    font-size: 0.95rem;
+}
+
+.review-rating {
+    color: #fbbf24; /* gold stars */
+    font-size: 0.95rem;
+}
+
+.review-text {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+.no-reviews {
+    font-size: 0.9rem;
+    color: #777;
+    font-style: italic;
+}
+/* Footer */
+footer {
+    background: #fff;
+    color: #555;
+    text-align: center;
+    padding: 40px 16px 32px 16px;
+    font-size: 1rem;
+    border-top: 1px solid var(--border-color);
+    box-sizing: border-box;
+}
+
+footer .footer-title {
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+footer .footer-note {
+    margin-bottom: 8px;
+}
