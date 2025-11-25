@@ -1,5 +1,6 @@
 import {Router} from "express";
 import {withConn} from "./db.js";
+import {authMiddleware} from "./authMiddleware.js";
 
 const router = Router();
 
@@ -115,4 +116,50 @@ router.get("/:id/reviews", async (req, res) => {
     }
 });
 
+// post review (requires login)
+router.post("/:id/reviews", authMiddleware, async (req, res) => {
+
+    const gameId = Number(req.params.id);
+    const userId = Number(req.user.id);
+    const rating = Number(req.body.rating);
+    const comment = req.body.comment?.trim();
+
+    if (!rating || !comment) {
+        return res.status(400).json({ ok: false, error: "Rating and comment required" });
+    }
+
+    try {
+        await withConn(async (conn) => {
+
+            // Does this user already have a review?
+            const existing = await conn.query(
+                `SELECT review_id FROM reviews WHERE game_id = ? AND user_id = ?`,
+                [gameId, userId]
+            );
+
+            if (existing.length > 0) {
+                // UPDATE review
+                await conn.query(
+                    `UPDATE reviews
+                     SET rating = ?, comment = ?, created_at = NOW()
+                     WHERE game_id = ? AND user_id = ?`,
+                    [rating, comment, gameId, userId]
+                );
+            } else {
+                // INSERT new review
+                await conn.query(
+                    `INSERT INTO reviews (game_id, user_id, rating, comment)
+                     VALUES (?, ?, ?, ?)`,
+                    [gameId, userId, rating, comment]
+                );
+            }
+        });
+
+        res.json({ ok: true, message: "Review saved" });
+
+    } catch (err) {
+        console.error("Review error:", err);
+        res.status(500).json({ ok: false, error: "Database error" });
+    }
+});
 export default router;

@@ -1,12 +1,16 @@
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "./game_profile.css";
+import {isLoggedIn} from "../../authUtils.js";
 
 export default function GameProfile() {
     const { id } = useParams();
     const [game, setGame] = useState(null);
     const [reviews, setReviews] = useState([]);
+    const [userRating, setUserRating] = useState(0);
+    const [userComment, setUserComment] = useState("");
 
+    // Fetch game details
     useEffect(() => {
         fetch(`http://localhost:4000/api/games/${id}`)
             .then(res => res.json())
@@ -14,13 +18,51 @@ export default function GameProfile() {
             .catch(err => console.error(err));
     }, [id]);
 
+    // Fetch game reviews
     useEffect(() => {
         fetch(`http://localhost:4000/api/games/${id}/reviews`)
             .then(res => res.json())
             .then(data => setReviews(data))
             .catch(err => console.error(err));
-    },[id]);
+    }, [id]);
 
+    // Submit review
+    function handleSubmitReview() {
+        if (!userRating || !userComment.trim()) {
+            alert("Please provide both a rating and a review.");
+            return;
+        }
+
+        fetch(`http://localhost:4000/api/games/${id}/reviews`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("authToken")
+            },
+            body: JSON.stringify({
+                rating: userRating,
+                comment: userComment
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.ok) {
+                    alert(data.error || "Could not submit review.");
+                    return;
+                }
+
+                setUserComment("");
+                setUserRating(0);
+
+                // Refresh reviews list
+                fetch(`http://localhost:4000/api/games/${id}/reviews`)
+                    .then(res => res.json())
+                    .then(updated => setReviews(updated));
+            })
+            .catch(err => console.error(err));
+    }
+
+    // Loading state
     if (!game) return <div className="loading">Loading...</div>;
 
     return (
@@ -99,6 +141,40 @@ export default function GameProfile() {
                 {/* Reviews Section */}
                 <div className="reviews-section">
                     <h2>User Reviews</h2>
+
+                    {/* Write a Review Form */}
+                    {!isLoggedIn() ? (
+                        <p className="login-prompt">
+                            Please <Link to="/login">log in</Link> to write a review.
+                        </p>
+                    ) : (
+                        <div className="write-review-box">
+                            <h3>Write a Review</h3>
+
+                            <label>Your Rating</label>
+                            <div className="rating-stars">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <span
+                                        key={star}
+                                        className={`star ${star <= userRating ? "filled" : ""}`}
+                                        onClick={() => setUserRating(star)}>⭐</span>
+                                ))}
+                            </div>
+
+                            <label>Your Review</label>
+                            <textarea
+                                value={userComment}
+                                onChange={(e) => setUserComment(e.target.value)}
+                                placeholder="Share your experience with this game..."
+                                className="review-input"
+                            ></textarea>
+
+                            <button className="submit-review-btn" onClick={handleSubmitReview}>
+                                Submit Review
+                            </button>
+                        </div>
+                    )}
+
                     {reviews && reviews.length > 0 ? (
                         reviews.map((review) => (
                             <div key={review.review_id} className="review-card">
