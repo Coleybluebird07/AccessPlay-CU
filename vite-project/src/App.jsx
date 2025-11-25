@@ -1,12 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import LandingPage from "./LandingPage";
-import LoginPage from "./components/LoginPage/LoginPage";
-import RegisterPage from "./components/LoginPage/ResgisterPage";
-import Browse_games from "./components/browser_games/browse_game";
-import GameProfile from "./components/game_profile/game_profile.jsx";
-
 import LandingPage from './LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/LoginPage/ResgisterPage';
@@ -16,6 +10,7 @@ import './navbar.css';
 import './components/browser_games/browse_game.css';
 import AccountPage from "./AccountPage";
 import { isLoggedIn, getUserEmail, logout } from "./authUtils";
+import GameProfile from "./components/game_profile/game_profile.jsx";
 
 
 export default function App() {
@@ -24,45 +19,51 @@ export default function App() {
   const email = getUserEmail();
 
 
-  return (
-      <>
-        <div className="nav-links">
-          <a href="/browse-games">Browse games</a>
-
-          {!loggedIn && (
-              <>
-                <a href="/login">Login</a>
-                <a href="/register" className="nav-button">
-                  Register
-                </a>
-              </>
-          )}
-
-          {loggedIn && (
-              <>
-                <span className="nav-user">Hi, {email}</span>
-                <a href="/account">My Account</a>
-                <button
-                    type="button"
-                    className="nav-button"
-                    onClick={logout}
-                    style={{border: "none", cursor: "pointer"}}
-                >
-                  Logout
-                </button>
-              </>
-          )}
-        </div>
+    return (
+        <Router>
+            <div className="navbar">
+                <Link to="/" className="nav-logo">AccessPlay</Link>
+                <div className="nav-links">
+                    <Link to="/">Home</Link>
+                    <Link to="/browse-games">Browse Games</Link>
+                    {!loggedIn && (
+                        <>
+                            <Link to="/login">Login</Link>
+                            <Link to="/register" className="nav-button">Register</Link>
+                        </>
+                    )}
 
 
-        <div className="page-wrapper">
-          {path === "/register" && <RegisterPage/>}
-          {path === "/login" && <LoginPage/>}
-          {path === "/" && <LandingPage/>}
-          {path === "/browse-games" && <Browse_games/>}
-          {path === "/account" && <AccountPage />}
-        </div>
+                    {loggedIn && (
+                        <>
+                            <span className="nav-user">Hi, {email}</span>
+                            <Link href="/account">My Account</Link>
+                            <button
+                                type="button"
+                                className="nav-button"
+                                onClick={logout}
+                                style={{border: "none", cursor: "pointer"}}
+                            >
+                                Logout
+                            </button>
+                        </>
+                    )}
 
-      </>
-  );
+                </div>
+            </div>
+
+
+            <div className="page-wrapper">
+                <Routes>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/browse-games" element={<Browse_games />} />
+                    <Route path="/games/:id" element={<GameProfile />} />
+                    {/* Optional: 404 route */}
+                    <Route path="*" element={<div>Page not found</div>} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
