@@ -1,0 +1,154 @@
+.page-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem 3rem;
+}
+
+/* Main card */
+.account-card {
+    width: 100%;
+    max-width: 960px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+.account-card h1 {
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    font-size: 1.9rem;
+}
+
+/* Layout wrapper:
+   - 1 column on small screens
+   - 2 columns on larger screens
+*/
+.account-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+}
+
+/* Two-column layout from ~900px upwards */
+@media (min-width: 900px) {
+    .account-layout {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+        align-items: flex-start;
+    }
+}
+
+.account-column {
+    min-width: 0; /* prevents overflow in grid */
+}
+
+/* Basic info table */
+.account-details {
+    margin-bottom: 0.5rem;
+}
+
+.account-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid #e5edff;
+}
+
+.account-row:last-child {
+    border-bottom: none;
+}
+
+.account-row .label {
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.account-row .value {
+    color: #111827;
+    margin-left: 1rem;
+}
+
+/* Sections (forms) */
+.account-section {
+    margin-top: 0.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e5edff;
+}
+
+.account-section h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.1rem;
+}
+
+/* Forms */
+.account-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.account-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    color: #374151;
+    gap: 0.25rem;
+}
+
+.account-form input {
+    padding: 0.45rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 0.95rem;
+}
+
+.account-form input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+}
+
+/* Buttons */
+.logout-button {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.55rem 1.35rem;
+    border-radius: 999px;
+    border: none;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #dc2626;
+}
+
+.secondary-button {
+    align-self: flex-start;
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    border: none;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.secondary-button[disabled] {
+    opacity: 0.7;
+    cursor: default;
+}
+
+/* Messages */
+.error-message {
+    color: #b91c1c;
+    font-size: 0.85rem;
+}
+
+.success-message {
+    color: #16a34a;
+    font-size: 0.85rem;
+}
