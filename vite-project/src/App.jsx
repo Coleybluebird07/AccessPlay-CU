@@ -28,10 +28,8 @@ export default function App() {
                     <Link to="/browse-games">Browse Games</Link>
                     {!loggedIn && (
                         <>
-                            <Link href="/login">Login</Link>
-                            <Link href="/register" className="nav-button">
-                                Register
-                            </Link>
+                            <Link to="/login">Login</Link>
+                            <Link to="/register" className="nav-button">Register</Link>
                         </>
                     )}
 
