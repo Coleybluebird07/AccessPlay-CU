@@ -37,7 +37,7 @@ export default function App() {
                     {loggedIn && (
                         <>
                             <span className="nav-user">Hi, {email}</span>
-                            <Link href="/account">My Account</Link>
+                            <Link to="/account">My Account</Link>
                             <button
                                 type="button"
                                 className="nav-button"
