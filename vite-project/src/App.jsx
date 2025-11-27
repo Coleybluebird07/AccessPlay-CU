@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import LandingPage from './LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
@@ -12,71 +12,55 @@ import AccountPage from "./AccountPage";
 import { isLoggedIn, getUserEmail, logout } from "./authUtils";
 import GameProfile from "./components/game_profile/game_profile.jsx";
 
-function Announcer() {
-  const location = useLocation();
-  useEffect(() => {
-    const node = document.getElementById("aria-live");
-    if (node) {
-      node.textContent = `Navigated to ${document.title || location.pathname}`;
-    }
-    // Move focus to main on route change
-    const main = document.getElementById("main-content");
-    if (main) main.tabIndex = -1, main.focus();
-  }, [location]);
-  return null;
-}
 
 export default function App() {
   const path = window.location.pathname;
   const loggedIn = isLoggedIn();
   const email = getUserEmail();
 
-    return (
-        <Router>
-            <Announcer />
-            <div className="navbar" role="navigation" aria-label="Main navigation">
-                <Link to="/" className="nav-logo">AccessPlay</Link>
-                <div className="nav-links">
-                    <Link to="/">Home</Link>
-                    <Link to="/browse-games">Browse Games</Link>
-                    {!loggedIn && (
-                        <>
-                            <Link to="/login">Login</Link>
-                            <Link to="/register" className="nav-button">Register</Link>
-                        </>
-                    )}
-
-
-                    {loggedIn && (
-                        <>
-                            <span className="nav-user">Hi, {email}</span>
-                            <Link to="/account">My Account</Link>
-                            <button
-                                type="button"
-                                className="nav-button"
-                                onClick={logout}
-                                style={{border: "none", cursor: "pointer"}}
-                            >
-                                Logout
-                            </button>
-                        </>
-                    )}
-
-                </div>
+  return (
+    <Router>
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <div className="container-fluid">
+          <Link to="/" className="navbar-brand">AccessPlay</Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="mainNav">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item"><Link to="/" className="nav-link">Home</Link></li>
+              <li className="nav-item"><Link to="/browse-games" className="nav-link">Browse Games</Link></li>
+            </ul>
+            <div className="d-flex align-items-center gap-2">
+              {!loggedIn && (
+                <>
+                  <Link to="/login" className="btn btn-outline-primary">Login</Link>
+                  <Link to="/register" className="btn btn-primary">Register</Link>
+                </>
+              )}
+              {loggedIn && (
+                <>
+                  <span className="navbar-text">Hi, {email}</span>
+                  <Link to="/account" className="btn btn-outline-secondary">My Account</Link>
+                  <button type="button" className="btn btn-danger" onClick={logout}>Logout</button>
+                </>
+              )}
             </div>
+          </div>
+        </div>
+      </nav>
 
-
-            <main className="page-wrapper" id="main-content" role="main" aria-label="Main content">
-                <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/browse-games" element={<Browse_games />} />
-                    <Route path="/games/:id" element={<GameProfile />} />
-                    {/* Optional: 404 route */}
-                    <Route path="*" element={<div>Page not found</div>} />
-                </Routes>
-            </main>
-        </Router>
-    );
+      <div className="container py-3">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/browse-games" element={<Browse_games />} />
+          <Route path="/games/:id" element={<GameProfile />} />
+          {/* Optional: 404 route */}
+          <Route path="*" element={<div>Page not found</div>} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
