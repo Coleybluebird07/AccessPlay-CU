@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import LandingPage from './LandingPage';
@@ -14,7 +14,7 @@ import GameProfile from "./components/game_profile/game_profile.jsx";
 
 
 export default function App() {
-  const path = window.location.pathname;
+  const [isNavOpen, setIsNavOpen] = useState(false);
   const loggedIn = isLoggedIn();
   const email = getUserEmail();
 
@@ -22,27 +22,38 @@ export default function App() {
     <Router>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <Link to="/" className="navbar-brand">AccessPlay</Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
+          <Link to="/" className="navbar-brand" onClick={() => setIsNavOpen(false)}>AccessPlay</Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            aria-controls="mainNav"
+            aria-expanded={isNavOpen}
+            aria-label="Toggle navigation"
+            onClick={() => setIsNavOpen((open) => !open)}
+          >
+            <span className="navbar-toggler-icon" />
           </button>
-          <div className="collapse navbar-collapse" id="mainNav">
+          <div className={`navbar-collapse ${isNavOpen ? "show" : "collapse"}`} id="mainNav">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item"><Link to="/" className="nav-link">Home</Link></li>
-              <li className="nav-item"><Link to="/browse-games" className="nav-link">Browse Games</Link></li>
+              <li className="nav-item">
+                <Link to="/" className="nav-link" onClick={() => setIsNavOpen(false)}>Home</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/browse-games" className="nav-link" onClick={() => setIsNavOpen(false)}>Browse Games</Link>
+              </li>
             </ul>
             <div className="d-flex align-items-center gap-2">
               {!loggedIn && (
                 <>
-                  <Link to="/login" className="btn btn-outline-primary">Login</Link>
-                  <Link to="/register" className="btn btn-primary">Register</Link>
+                  <Link to="/login" className="btn btn-outline-primary" onClick={() => setIsNavOpen(false)}>Login</Link>
+                  <Link to="/register" className="btn btn-primary" onClick={() => setIsNavOpen(false)}>Register</Link>
                 </>
               )}
               {loggedIn && (
                 <>
                   <span className="navbar-text">Hi, {email}</span>
-                  <Link to="/account" className="btn btn-outline-secondary">My Account</Link>
-                  <button type="button" className="btn btn-danger" onClick={logout}>Logout</button>
+                  <Link to="/account" className="btn btn-outline-secondary" onClick={() => setIsNavOpen(false)}>My Account</Link>
+                  <button type="button" className="btn btn-danger" onClick={() => { setIsNavOpen(false); logout(); }}>Logout</button>
                 </>
               )}
             </div>
