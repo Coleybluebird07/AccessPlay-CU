@@ -180,6 +180,19 @@ html, body {
     .profile-content {
         gap: 20px;
     }
+    .profile-content {
+        display: block;
+    }
+    .left-column, .right-column {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+    .hero-title {
+        font-size: 22px;
+    }
+    .download-btn {
+        width: 100%;
+    }
 }
 
 /* --- Reviews Section --- */
@@ -231,6 +244,72 @@ html, body {
     color: #777;
     font-style: italic;
 }
+
+.write-review-box {
+    background: #f5f7ff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.rating-stars {
+    font-size: 24px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.star {
+    opacity: 0.4;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.star.filled {
+    opacity: 1;
+}
+
+.review-input {
+    width: 100%;
+    height: 100px;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    resize: none;
+}
+
+.submit-review-btn {
+    background: #2563eb;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Login prompt above review form */
+.login-prompt {
+    background: #fff3cd;
+    color: #856404;
+    padding: 12px 16px;
+    border-left: 4px solid #ffca2c;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.login-prompt a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-prompt a:hover {
+    text-decoration: underline;
+}
+
+
 /* Footer */
 footer {
     background: #fff;
