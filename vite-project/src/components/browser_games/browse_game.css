@@ -45,22 +45,39 @@ html, body {
     overflow-y: auto;
     top: 100px;
     max-height: calc(100vh - 120px);
+    padding: 16px;
+    border-right: 1px solid #e5e7eb;
+    background-color: #f9fafb;
 }
 
 .filters h5 {
     font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
+}
+
+.filters form div {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.35rem;
 }
 
 .filters input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
     margin: 0;
     accent-color: var(--primary-color);
 }
 
+.filters label {
+    font-size: 0.9rem;
+}
+
 .separator {
     border-top: 1px solid #dddddd;
-    margin: 16px 0;
+    margin: 1rem 0;
+    border-top: 1px solid #e5e7eb;
 }
 
 /* --- Main Game Area --- */
@@ -200,6 +217,32 @@ html, body {
     }
     .filters.collapsed {
         display: block;
+    }
+    .container {
+        display: block;
+    }
+    .filters {
+        margin-bottom: 16px;
+    }
+    .main_game_area .header h4 {
+        font-size: 18px;
+    }
+    .game-list {
+        grid-template-columns: 1fr 1fr;
+    }
+    .filters {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-list {
+        grid-template-columns: 1fr;
+    }
+    .search-input {
+        font-size: 16px;
+        padding: 10px 12px;
     }
 }
 
