@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `group7_auth` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `group7_auth`;
+CREATE DATABASE IF NOT EXISTS `group_test_auth` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `group_test_auth`;
 
 
 CREATE TABLE IF NOT EXISTS users (
@@ -120,3 +120,7 @@ CREATE TRIGGER IF NOT EXISTS update_avg_rating_after_update
     )
     WHERE game_id = NEW.game_id;
 
+# DROP DATABASE group7_auth;
+SHOW TABLES FROM group_test_auth;
+
+select * from reviews;
