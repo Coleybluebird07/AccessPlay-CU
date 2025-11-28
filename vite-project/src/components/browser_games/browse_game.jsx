@@ -91,6 +91,7 @@ export default function Browse_games() {
                                     <div className="game-meta">
                                         <span>{game.genres?.join(", ") ?? "No genres"}</span>
                                         <span>{game.platform ?? "Unknown platform"}</span>
+                                        <span className="game-rating">⭐ {game.average_rating ?? "No Rating"}</span>
                                     </div>
                                 </Link>
                             ))

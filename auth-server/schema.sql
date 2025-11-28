@@ -95,3 +95,28 @@ CREATE TABLE IF NOT EXISTS user_favorites (
     INDEX (user_id),
     INDEX (game_id)
 )ENGINE=InnoDB;
+
+ALTER TABLE games ADD avg_rating DECIMAL(3,1) DEFAULT 0;
+
+CREATE TRIGGER IF NOT EXISTS update_avg_rating_after_insert
+    AFTER INSERT ON reviews
+    FOR EACH ROW
+    UPDATE games
+    SET avg_rating = (
+        SELECT ROUND(AVG(rating), 1)
+        FROM reviews
+        WHERE game_id = NEW.game_id
+    )
+    WHERE game_id = NEW.game_id;
+
+CREATE TRIGGER IF NOT EXISTS update_avg_rating_after_update
+    AFTER UPDATE ON reviews
+    FOR EACH ROW
+    UPDATE games
+    SET avg_rating = (
+        SELECT ROUND(AVG(rating), 1)
+        FROM reviews
+        WHERE game_id = NEW.game_id
+    )
+    WHERE game_id = NEW.game_id;
+

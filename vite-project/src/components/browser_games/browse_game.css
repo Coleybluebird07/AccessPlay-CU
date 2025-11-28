@@ -177,11 +177,28 @@ html, body {
 }
 
 .game-meta {
-    font-size: 0.85rem;
-    color: #777;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 6px;
+}
+
+.game-meta span {
+    display: flex;
+    align-items: center;
+}
+
+.game-rating {
+    font-weight: 700;
+    font-size: 15px;
+    color: #f5b301;
+    background: rgba(255, 229, 150, 0.3);
+    padding: 4px 8px;
+    border-radius: 8px;
+    backdrop-filter: blur(2px);
 }
 
 /* Scrollbars for sidebar only */
