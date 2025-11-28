@@ -78,6 +78,9 @@ export default function GameProfile() {
                 <div className="hero-overlay">
                     <h1 className="hero-title">{game.name}</h1>
                     <p className="hero-subtitle">{game.short_description}</p>
+                    <div className="hero-rating">
+                        ⭐ {game.average_rating ?? "No Rating"}
+                    </div>
                 </div>
             </div>
 
