@@ -1,4 +1,4 @@
-USE `group7_auth`;
+USE `group_test_auth`;
 
 
 
@@ -90,15 +90,16 @@ VALUES
     (3, 'https://example.com/images/game3_img1.jpg');
 
 
-INSERT INTO users (email, password_hash, created_at) VALUES
-                                                         ('user10@example.com', '$2y$10$A1b2C3d4E5f6G7h8I9j0kLmNOpQrStUvWxYz1234567890abcd', '2025-01-01 10:00:00'),
-                                                         ('user11@example.com', '$2y$10$Z9y8X7w6V5u4T3s2R1q0pOnMlKjIhHgFeDcBa9876543210zyxw', '2025-01-01 10:05:00'),
-                                                         ('user12@example.com', '$2y$10$PpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHh1234567890ab', '2025-01-01 10:10:00'),
-                                                         ('user14@example.com', '$2y$10$M1n2B3v4C5x6N7m8Z9p0LqRrStUvWxYzAaBbCcDdEeFfGgHhIi', '2025-01-01 10:15:00'),
-                                                         ('user15@example.com', '$2y$10$QqWwEeRrTtYyUuIiOoPpAaSsDdFfGgHhJjKk1234567890bb', '2025-01-01 10:20:00'),
-                                                         ('user17@example.com', '$2y$10$LkJjHhGgFfDdSsAaPpOoIiUuYyTtRrEeWwQq0987654321mm', '2025-01-01 10:25:00'),
-                                                         ('user18@example.com', '$2y$10$AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRr1234567890cc', '2025-01-01 10:30:00'),
-                                                         ('user22@example.com', '$2y$10$TtRrEeWwQqYyUuIiOoPpAaSsDdFfGgHhJjKk0987654321dd', '2025-01-01 10:35:00');
+INSERT INTO users (email, password_hash, created_at, is_admin) VALUES
+                                                         ('user10@example.com', '$2y$10$A1b2C3d4E5f6G7h8I9j0kLmNOpQrStUvWxYz1234567890abcd', '2025-01-01 10:00:00', 0),
+                                                         ('user11@example.com', '$2y$10$Z9y8X7w6V5u4T3s2R1q0pOnMlKjIhHgFeDcBa9876543210zyxw', '2025-01-01 10:05:00', 0),
+                                                         ('user12@example.com', '$2y$10$PpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHh1234567890ab', '2025-01-01 10:10:00', 0),
+                                                         ('user14@example.com', '$2y$10$M1n2B3v4C5x6N7m8Z9p0LqRrStUvWxYzAaBbCcDdEeFfGgHhIi', '2025-01-01 10:15:00', 0),
+                                                         ('user15@example.com', '$2y$10$QqWwEeRrTtYyUuIiOoPpAaSsDdFfGgHhJjKk1234567890bb', '2025-01-01 10:20:00', 0),
+                                                         ('user17@example.com', '$2y$10$LkJjHhGgFfDdSsAaPpOoIiUuYyTtRrEeWwQq0987654321mm', '2025-01-01 10:25:00', 0),
+                                                         ('user18@example.com', '$2y$10$AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRr1234567890cc', '2025-01-01 10:30:00', 0),
+                                                         ('user22@example.com', '$2y$10$TtRrEeWwQqYyUuIiOoPpAaSsDdFfGgHhJjKk0987654321dd', '2025-01-01 10:35:00', 0),
+                                                         ('admin@gmail.com', '$2b$10$wA7Jd1U3pJZP.OX6Myw0ru0oZf6DkDaM1rD2s5cYwYdUkg3ZgVbFi', NOW(), 1); #is admin set to 1 (admin user)
 
 
 INSERT INTO reviews (game_id, user_id, rating, comment, created_at) VALUES
@@ -113,5 +114,3 @@ INSERT INTO reviews (game_id, user_id, rating, comment, created_at) VALUES
                                                                         (3, 3, 3, 'Good concept but has some bugs.', '2025-01-10 12:10:18'),
                                                                         (3, 4, 4, 'Enjoyable and unique mechanics. Worth trying.', '2025-01-11 16:49:02'),
                                                                         (3, 5, 5, 'One of the best games I’ve played this year!', '2025-01-12 19:04:29');
-
-

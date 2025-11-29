@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AgentMigrationStateService">
+    <option name="pendingSessionIds">
+      <option value="c1d31c01-e082-4f57-aadd-094d8d2d533e" />
+    </option>
+    <option name="pendingTurns">
+      <map>
+        <entry key="c1d31c01-e082-4f57-aadd-094d8d2d533e">
+          <value>
+            <set>
+              <option value="da47a8ea-50fa-47fd-a436-d3d9063f8299" />
+              <option value="4158fa8e-c5a7-483c-8b1d-faca68d4195f" />
+              <option value="49bb7396-0a27-4281-9831-fa7e80ba50f0" />
+              <option value="4731419d-88cd-4195-acd7-0c68486458ac" />
+              <option value="94ab25f1-ac14-46ea-aca7-42921281c4e3" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <pendingWorkingSetItems>
+      <entry key="c1d31c01-e082-4f57-aadd-094d8d2d533e">
+        <set>
+          <option value="file://$PROJECT_DIR$/auth-server/schema.sql" />
+          <option value="file://$PROJECT_DIR$/auth-server/data.sql" />
+          <option value="file://$PROJECT_DIR$/auth-server/src/auth.js" />
+          <option value="file://$PROJECT_DIR$/auth-server/src/authMiddleware.js" />
+          <option value="file://$PROJECT_DIR$/auth-server/src/admin.js" />
+          <option value="file://$PROJECT_DIR$/auth-server/src/index.js" />
+          <option value="file://$PROJECT_DIR$/vite-project/src/authUtils.js" />
+          <option value="file://$PROJECT_DIR$/vite-project/src/components/LoginPage/LoginPage.jsx" />
+          <option value="file://$PROJECT_DIR$/vite-project/src/components/AdminPanel/AdminPanel.jsx" />
+          <option value="file://$PROJECT_DIR$/vite-project/src/App.jsx" />
+        </set>
+      </entry>
+    </pendingWorkingSetItems>
+  </component>
+</project>

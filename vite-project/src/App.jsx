@@ -10,14 +10,16 @@ import './landing-page.css';
 import './navbar.css';
 import './components/browser_games/browse_game.css';
 import AccountPage from "./AccountPage";
-import { isLoggedIn, getUserEmail, logout } from "./authUtils";
+import { isLoggedIn, getUserEmail, logout, getIsAdmin } from "./authUtils";
 import GameProfile from "./components/game_profile/game_profile.jsx";
+import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 
 
 export default function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const loggedIn = isLoggedIn();
   const email = getUserEmail();
+  const isAdmin = getIsAdmin();
 
   return (
     <Router>
@@ -42,6 +44,11 @@ export default function App() {
               <li className="nav-item">
                 <Link to="/browse-games" className="nav-link" onClick={() => setIsNavOpen(false)}>Browse Games</Link>
               </li>
+              {loggedIn && isAdmin && (
+                <li className="nav-item">
+                  <Link to="/admin" className="nav-link" onClick={() => setIsNavOpen(false)}>Admin Panel</Link>
+                </li>
+              )}
             </ul>
             <div className="d-flex align-items-center gap-2">
               {!loggedIn && (
@@ -69,6 +76,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/browse-games" element={<Browse_games />} />
           <Route path="/games/:id" element={<GameProfile />} />
+          <Route path="/admin" element={<AdminPanel />} />
           {/* Optional: 404 route */}
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
