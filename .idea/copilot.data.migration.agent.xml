@@ -14,6 +14,13 @@
               <option value="49bb7396-0a27-4281-9831-fa7e80ba50f0" />
               <option value="4731419d-88cd-4195-acd7-0c68486458ac" />
               <option value="94ab25f1-ac14-46ea-aca7-42921281c4e3" />
+              <option value="c888c4ba-8d54-4018-adfc-fc49dec55450" />
+              <option value="9b76e492-1660-4d08-8b5b-4549b8671cd5" />
+              <option value="c83ae4ac-f792-4e71-94b5-2550970f4f79" />
+              <option value="4c561522-a5b5-4d10-8cb7-ff7af28c3f3f" />
+              <option value="909ef294-b2f8-4dca-b2a9-85adbefa03e8" />
+              <option value="a45437da-0852-4839-a166-529924767972" />
+              <option value="a256f003-e1ee-46bb-9dc7-14d45659bb02" />
             </set>
           </value>
         </entry>
@@ -32,6 +39,7 @@
           <option value="file://$PROJECT_DIR$/vite-project/src/components/LoginPage/LoginPage.jsx" />
           <option value="file://$PROJECT_DIR$/vite-project/src/components/AdminPanel/AdminPanel.jsx" />
           <option value="file://$PROJECT_DIR$/vite-project/src/App.jsx" />
+          <option value="file://$PROJECT_DIR$/vite-project/src/components/AdminPanel/AdminPanel.css" />
         </set>
       </entry>
     </pendingWorkingSetItems>
