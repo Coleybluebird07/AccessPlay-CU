@@ -52,20 +52,18 @@ CREATE TABLE IF NOT EXISTS game_images (
 CREATE TABLE IF NOT EXISTS accessibility_features (
     feature_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     feature_name VARCHAR(100) NOT NULL UNIQUE,
-    game_id BIGINT UNSIGNED NOT NULL,
     feature_description VARCHAR(512) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (game_id) REFERENCES games(game_id) ON DELETE CASCADE,
-    INDEX (game_id)
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS game_features (
-    feature_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    feature_id BIGINT UNSIGNED NOT NULL,
     game_id BIGINT UNSIGNED NOT NULL,
-    feature_description VARCHAR(512) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (feature_id, game_id),
+    FOREIGN KEY (feature_id) REFERENCES accessibility_features(feature_id) ON DELETE CASCADE,
     FOREIGN KEY (game_id) REFERENCES games(game_id) ON DELETE CASCADE,
-    INDEX (game_id)
+    INDEX (game_id),
+    INDEX (feature_id)
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS genres (
@@ -119,4 +117,3 @@ CREATE TRIGGER IF NOT EXISTS update_avg_rating_after_update
         WHERE game_id = NEW.game_id
     )
     WHERE game_id = NEW.game_id;
-

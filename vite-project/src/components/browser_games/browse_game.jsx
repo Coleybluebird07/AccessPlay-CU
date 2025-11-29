@@ -5,6 +5,9 @@ import "./browse_game.css";
 export default function Browse_games() {
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchText, setSearchText] = useState("");
+    const [selectedGenres, setSelectedGenres] = useState([]);
+    const [selectedFeatures, setSelectedFeatures] = useState([]);
 
     useEffect(() => {
         fetch("http://localhost:4000/api/games")
@@ -27,6 +30,30 @@ export default function Browse_games() {
             .finally(() => setLoading(false));
     }, []);
 
+    function toggleGenre(genre) {
+        setSelectedGenres(prev =>
+            prev.includes(genre) ? prev.filter(g => g !== genre) : [...prev, genre]
+        );
+    }
+
+    function toggleAccessibility(feature) {
+        setSelectedFeatures(prev =>
+            prev.includes(feature) ? prev.filter(f => f !== feature) : [...prev, feature]
+        );
+    }
+
+    useEffect(() => {
+        const params = new URLSearchParams();
+
+        if (searchText) params.append("search", searchText);
+        if (selectedGenres.length > 0) params.append("genres", selectedGenres.join(","));
+        if (selectedFeatures.length > 0) params.append("features", selectedFeatures.join(","));
+
+        fetch(`http://localhost:4000/api/games?${params.toString()}`)
+            .then(res => res.json())
+            .then(setGames)
+            .catch(() => setGames([]));
+    }, [searchText, selectedGenres, selectedFeatures]);
     return (
         <div>
             <div className="container">
@@ -36,7 +63,7 @@ export default function Browse_games() {
                         {["Puzzle","Adventure","RPG","Casual","Simulations","Word Games","Card Games","Board Games","Music & Rhythm","Educational","Trivia"].map((genre) => (
                             <div key={genre}>
                                 <input
-                                    type="checkbox"
+                                    type="checkbox" onClick={() => toggleGenre(genre)}
                                     id={genre.toLowerCase().replace(/[\s&]/g, "_")}
                                     name="genre"
                                     value={genre.toLowerCase().replace(/[\s&]/g, "_")}
@@ -53,7 +80,7 @@ export default function Browse_games() {
                         {["Color Blind Mode","Subtitle & Captions","One-Handed Play","Voice Control Support","Screen Reader Compatibility","Customize Text Size","No Audio Required","Slow-Paced Gameplay","Visual Audio Indicator","Difficulty Adjustments","Haptic Feedback Options","High Contrast Mode","Motion Sensitivity Options","Customizable Controls","Auto-Save Feature","Pause Anytime"].map((feature) => (
                             <div key={feature}>
                                 <input
-                                    type="checkbox"
+                                    type="checkbox" onClick={() => toggleAccessibility(feature)}
                                     id={feature.toLowerCase().replace(/[\s&-]/g, "_")}
                                     name="accessibility"
                                     value={feature.toLowerCase().replace(/[\s&-]/g, "_")}
@@ -74,7 +101,12 @@ export default function Browse_games() {
                     </div>
 
                     <div className="search-bar" id="search-bar">
-                        <input type="text" id="search-input" className="search-input" placeholder="Search for games..." />
+                        <input
+                            type="text"
+                            className="search-input"
+                            placeholder="Search for games..."
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
                     </div>
 
                     <div className="game-list">
