@@ -73,6 +73,8 @@ export default function App() {
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
       </div>
+      
+      <MicrophoneButton />
     </Router>
   );
 }

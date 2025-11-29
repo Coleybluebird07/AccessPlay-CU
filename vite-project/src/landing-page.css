@@ -1,4 +1,4 @@
-  body, html { /* Global body and html styles */
+body, html { /* Global body and html styles */
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
@@ -230,7 +230,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 24px rgba(37,99,235,0.18);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
     transition: box-shadow 0.2s, background 0.2s;
     outline: none;
   }
@@ -296,7 +296,7 @@
     border-radius: 1.5rem;
     font-size: 1.1rem;
     font-weight: 500;
-    box-shadow: 0 4px 24px rgba(37,99,235,0.18);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
     z-index: 1001;
     animation: fadeInScale 0.2s;
     pointer-events: none;
