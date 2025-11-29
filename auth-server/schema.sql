@@ -119,8 +119,3 @@ CREATE TRIGGER IF NOT EXISTS update_avg_rating_after_update
         WHERE game_id = NEW.game_id
     )
     WHERE game_id = NEW.game_id;
-
-# DROP DATABASE group7_auth;
-SHOW TABLES FROM group_test_auth;
-
-select * from reviews;
