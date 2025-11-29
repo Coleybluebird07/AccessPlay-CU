@@ -5,6 +5,7 @@ import LandingPage from './LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/LoginPage/ResgisterPage';
 import Browse_games from './components/browser_games/browse_game';
+import MicrophoneButton from './components/MicrophoneButton';
 import './landing-page.css';
 import './navbar.css';
 import './components/browser_games/browse_game.css';
@@ -72,6 +73,8 @@ export default function App() {
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
       </div>
+      
+      <MicrophoneButton />
     </Router>
   );
 }
