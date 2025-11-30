@@ -12,6 +12,7 @@ import './components/browser_games/browse_game.css';
 import AccountPage from "./AccountPage";
 import { isLoggedIn, getUserEmail, logout } from "./authUtils";
 import GameProfile from "./components/game_profile/game_profile.jsx";
+import SettingsPage from "./components/SettingsPage/SettingsPage.jsx";
 
 
 export default function App() {
@@ -42,6 +43,8 @@ export default function App() {
               <li className="nav-item">
                 <Link to="/browse-games" className="nav-link" onClick={() => setIsNavOpen(false)}>Browse Games</Link>
               </li>
+              <li className="nav-item"><Link to="/settings" className="nav-link" onClick={() => setIsNavOpen(false)}>Settings</Link>
+              </li>
             </ul>
             <div className="d-flex align-items-center gap-2">
               {!loggedIn && (
@@ -69,6 +72,10 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/browse-games" element={<Browse_games />} />
           <Route path="/games/:id" element={<GameProfile />} />
+
+          {/* Settings Route */}
+          <Route path="/settings" element={<SettingsPage />} />
+
           {/* Optional: 404 route */}
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
