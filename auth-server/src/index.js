@@ -22,11 +22,11 @@ app.use("/api/auth", authRouter);
 app.use("/api/games", gamesRouter);
 
 // preference route
-import userPreferencesRoute from "./routes/userPreferences.js";
+import userPreferencesRoute from "../routes/userPreferences.js";
 app.use("/api/preferences", userPreferencesRoute);
 
 // syslogs route
-import systemLogsRoute from ",/routes/systemLogs.js";
+import systemLogsRoute from "../routes/systemLogs.js";
 app.use("/api/logs", systemLogsRoute);
 
 app.use((req, res) => res.status(404).json({ ok: false, error: "Not found" }));

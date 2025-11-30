@@ -1,54 +1,46 @@
-//
-
 import express from "express";
 import fs from "fs";
 import path from "path";
-import { stringify } from "querystring";
 
 const router = express.Router();
 
-//Log file
-
+// Correct  path
 const LOG_FILE = path.join(process.cwd(), "auth-server/data/systemLogs.json");
 
-//Logs reader
-
+// Read logs
 function readLogs() {
-    if (!fs.existsSync(LOG_FILE)) return [];
-    return JSON.parse(fs.readFileSync(LOG_FILE, "utf-8"));
+  if (!fs.existsSync(LOG_FILE)) return [];
+  return JSON.parse(fs.readFileSync(LOG_FILE, "utf8"));
 }
 
-//writes logs
-
+// Write logs
 function writeLogs(logs) {
-    fs.writeFileSync(LOG_FILE, JSON, stringify(logs, null, 2));
+  fs.writeFileSync(LOG_FILE, JSON.stringify(logs, null, 2));
 }
 
-//post /api/logs and adds entry.
-
+// posts api logs
 router.post("/", (req, res) => {
-    const { message, userID = null, details = null } = req.body;
+  const { message, userId = null, details = null } = req.body;
 
-    const logs = readLogs();
+  const logs = readLogs();
 
-    const logEntry = {
-        timestamp: new Date().toISOString(),
-        message,
-        userID,
-        details,
-    };
+  const logEntry = {
+    timestamp: new Date().toISOString(),
+    message,
+    userId,
+    details,
+  };
 
-    logs.push(logEntry);
-    writeLogs(logs);
+  logs.push(logEntry);
+  writeLogs(logs);
 
-    res.json({ ok: true, message: "Log saved", entry: logEntry});
+  res.json({ ok: true, message: "Log saved", entry: logEntry });
 });
 
-//gets the api logs and returns
-
+// get api logs
 router.get("/", (req, res) => {
-    const logs = readLogs();
-    res.json(logs);
+  const logs = readLogs();
+  res.json(logs);
 });
 
 export default router;

@@ -48,6 +48,8 @@ const LoginPage = () => {
             // Success — save token for future authenticated requests
             localStorage.setItem('authToken', data.token);
             localStorage.setItem('userEmail', data.user.email);
+            localStorage.setItem("userId", data.user.id);
+
 
             setMessage('Login successful! Redirecting...');
             console.log('[Login] success:', data);

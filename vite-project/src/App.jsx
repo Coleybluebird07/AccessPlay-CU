@@ -67,18 +67,16 @@ export default function App() {
 
       <div className="container py-3">
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/browse-games" element={<Browse_games />} />
-          <Route path="/games/:id" element={<GameProfile />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/browse-games" element={<Browse_games />} />
+        <Route path="/games/:id" element={<GameProfile />} />
 
-          {/* Settings Route */}
-          <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
 
-          {/* Optional: 404 route */}
-          <Route path="*" element={<div>Page not found</div>} />
-        </Routes>
+        <Route path="*" element={<div>Page not found</div>} />
+  </Routes>
       </div>
       
       <MicrophoneButton />

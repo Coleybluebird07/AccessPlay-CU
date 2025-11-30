@@ -1,8 +1,13 @@
 .settings-wrapper {
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  align-items: flex-start;
+  min-height: calc(100vh - 70px);
+  padding-top: 360px; /* adjust up/down as you like */
+  padding-left: 395px;
 }
+
+
 
 .settings-card {
   background: #ffffff;

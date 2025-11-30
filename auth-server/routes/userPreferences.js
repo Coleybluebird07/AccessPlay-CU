@@ -1,50 +1,41 @@
-//Stores accessbility settings such as dark mode/font size).
+import express from "express";
+import fs from "fs";
+import path from "path";
 
-const express = require("express");
 const router = express.Router();
-const fs = require("fs");
-const path = require("path");
-const { stringify } = require("querystring");
-const { use } = require("react");
-const { json } = require("stream/consumers");
 
-// the JSON file where the preferences will be held.
+const FILE_PATH = path.join(process.cwd(), "auth-server/data/userPreferences.json");
 
-const FILE_PATH = path.join(__dirname, "../data/userPreferences.json");
-
-// reads the preferences.
-
+// Read preferences
 function readPreferences() {
-    if (!fs.existsSync(FILE_PATH)) {
-        return {};
-    }
-    return JSON,parse(fs.readFileSync(FILE_PATH, "utf8"));
+    if (!fs.existsSync(FILE_PATH)) return {};
+    return JSON.parse(fs.readFileSync(FILE_PATH, "utf8"));
 }
 
-// saves in the json file.
 
+// Save preferences
 function writePreferences(data) {
-    fs.writeFileSync(FILE_PATH, JSON,stringify(data, null, 2));
+    fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
 }
 
-//gets the userid and gives back the saved state.
 
-router.get("/userId", (req, res) => {
+// Get settings for user
+router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
     const allPrefs = readPreferences();
 
     const defaultSettings = {
         darkMode: false,
         highContrast: false,
-        textSize: "medium"
+        textSize: "medium",
     };
 
     res.json(allPrefs[userId] || defaultSettings);
 });
 
 
-// saves setting for users.
 
+// Save/update settings
 router.post("/:userId", (req, res) => {
     const userId = req.params.userId;
     const newSettings = req.body;
@@ -60,4 +51,4 @@ router.post("/:userId", (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;
