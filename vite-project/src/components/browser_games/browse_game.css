@@ -45,39 +45,22 @@ html, body {
     overflow-y: auto;
     top: 100px;
     max-height: calc(100vh - 120px);
-    padding: 16px;
-    border-right: 1px solid #e5e7eb;
-    background-color: #f9fafb;
 }
 
 .filters h5 {
     font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 0.75rem;
-}
-
-.filters form div {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-bottom: 0.35rem;
+    margin-bottom: 12px;
 }
 
 .filters input[type="checkbox"] {
-    width: 1rem;
-    height: 1rem;
     margin: 0;
     accent-color: var(--primary-color);
 }
 
-.filters label {
-    font-size: 0.9rem;
-}
-
 .separator {
     border-top: 1px solid #dddddd;
-    margin: 1rem 0;
-    border-top: 1px solid #e5e7eb;
+    margin: 16px 0;
 }
 
 /* --- Main Game Area --- */
@@ -177,28 +160,11 @@ html, body {
 }
 
 .game-meta {
+    font-size: 0.85rem;
+    color: #777;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     width: 100%;
-    font-size: 0.85rem;
-    color: #555;
-    margin-top: 6px;
-}
-
-.game-meta span {
-    display: flex;
-    align-items: center;
-}
-
-.game-rating {
-    font-weight: 700;
-    font-size: 15px;
-    color: #f5b301;
-    background: rgba(255, 229, 150, 0.3);
-    padding: 4px 8px;
-    border-radius: 8px;
-    backdrop-filter: blur(2px);
 }
 
 /* Scrollbars for sidebar only */
@@ -247,10 +213,6 @@ html, body {
     .game-list {
         grid-template-columns: 1fr 1fr;
     }
-    .filters {
-        border-right: none;
-        border-bottom: 1px solid #e5e7eb;
-    }
 }
 
 @media (max-width: 480px) {
@@ -283,104 +245,3 @@ footer .footer-title {
 footer .footer-note {
     margin-bottom: 8px;
 }
-<<<<<<< HEAD
-
-.mic-fab {
-  position: fixed;
-  right: 2rem;
-  bottom: 2rem;
-  z-index: 1000;
-  background: transparent;
-  border: none;
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 24px rgba(37,99,235,0.18);
-  transition: box-shadow 0.2s, background 0.2s;
-  outline: none;
-}
-.mic-fab-inner {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: #000;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-  transition: box-shadow 0.2s;
-}
-.mic-fab:hover .mic-fab-inner, .mic-fab:focus .mic-fab-inner {
-  box-shadow: 0 4px 16px #00000033;
-}
-.mic-fab-dot {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 12px;
-  height: 12px;
-  background: #000;
-  border-radius: 50%;
-  border: 2px solid #222;
-  box-shadow: 0 0 8px #000;
-  animation: mic-dot-pulse 1s infinite alternate;
-}
-@keyframes mic-dot-pulse {
-  from { opacity: 1; transform: scale(1); }
-  to { opacity: 0.5; transform: scale(1.3); }
-}
-.mic-fab-tooltip {
-  position: absolute;
-  bottom: 110%;
-  right: 50%;
-  transform: translateX(50%);
-  background: #000;
-  color: #fff;
-  padding: 0.3rem 0.8rem;
-  border-radius: 1rem;
-  font-size: 0.95rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
-  white-space: nowrap;
-}
-.mic-fab:hover .mic-fab-tooltip,
-.mic-fab:focus .mic-fab-tooltip {
-  opacity: 1;
-}
-.mic-popup {
-  position: fixed;
-  right: 90px;
-  bottom: 2.5rem;
-  background: #000;
-  color: #fff;
-  padding: 0.85rem 1.5rem;
-  border-radius: 1.5rem;
-  font-size: 1.1rem;
-  font-weight: 500;
-  box-shadow: 0 4px 24px rgba(37,99,235,0.18);
-  z-index: 1001;
-  animation: fadeInScale 0.2s;
-  pointer-events: none;
-  border: 2px solid #000;
-  letter-spacing: 0.01em;
-  min-width: 120px;
-  min-height: 32px;
-  display: flex;
-  align-items: center;
-}
-.mic-popup-interim {
-  opacity: 0.7;
-  font-style: italic;
-}
-@keyframes fadeInScale {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-=======
->>>>>>> da72d094afdffa51affc01797ea03fe24c1114ee

@@ -12,6 +12,7 @@ export default function Browse_games() {
             .then((data) => {
                 console.log("Fetched games:", data);
 
+                // Ensure we always have an array
                 if (Array.isArray(data)) {
                     setGames(data);
                 } else if (data.games && Array.isArray(data.games)) {
@@ -22,7 +23,7 @@ export default function Browse_games() {
             })
             .catch((error) => {
                 console.error("Error fetching games:", error);
-                setGames([]);
+                setGames([]); // fallback
             })
             .finally(() => setLoading(false));
     }, []);
@@ -30,10 +31,23 @@ export default function Browse_games() {
     return (
         <div>
             <div className="container">
+                {/* Sidebar Filters */}
                 <div className="filters">
                     <h5>Interests & Genres</h5>
                     <form className="filter_form" id="filter_form">
-                        {["Puzzle","Adventure","RPG","Casual","Simulations","Word Games","Card Games","Board Games","Music & Rhythm","Educational","Trivia"].map((genre) => (
+                        {[
+                            "Puzzle",
+                            "Adventure",
+                            "RPG",
+                            "Casual",
+                            "Simulations",
+                            "Word Games",
+                            "Card Games",
+                            "Board Games",
+                            "Music & Rhythm",
+                            "Educational",
+                            "Trivia",
+                        ].map((genre) => (
                             <div key={genre}>
                                 <input
                                     type="checkbox"
@@ -41,7 +55,9 @@ export default function Browse_games() {
                                     name="genre"
                                     value={genre.toLowerCase().replace(/[\s&]/g, "_")}
                                 />
-                                <label htmlFor={genre.toLowerCase().replace(/[\s&]/g, "_")}>{genre}</label>
+                                <label htmlFor={genre.toLowerCase().replace(/[\s&]/g, "_")}>
+                                    {genre}
+                                </label>
                             </div>
                         ))}
                     </form>
@@ -50,7 +66,24 @@ export default function Browse_games() {
 
                     <h5>Accessibility Features</h5>
                     <form className="accessibility_form" id="accessibility_form">
-                        {["Color Blind Mode","Subtitle & Captions","One-Handed Play","Voice Control Support","Screen Reader Compatibility","Customize Text Size","No Audio Required","Slow-Paced Gameplay","Visual Audio Indicator","Difficulty Adjustments","Haptic Feedback Options","High Contrast Mode","Motion Sensitivity Options","Customizable Controls","Auto-Save Feature","Pause Anytime"].map((feature) => (
+                        {[
+                            "Color Blind Mode",
+                            "Subtitle & Captions",
+                            "One-Handed Play",
+                            "Voice Control Support",
+                            "Screen Reader Compatibility",
+                            "Customize Text Size",
+                            "No Audio Required",
+                            "Slow-Paced Gameplay",
+                            "Visual Audio Indicator",
+                            "Difficulty Adjustments",
+                            "Haptic Feedback Options",
+                            "High Contrast Mode",
+                            "Motion Sensitivity Options",
+                            "Customizable Controls",
+                            "Auto-Save Feature",
+                            "Pause Anytime",
+                        ].map((feature) => (
                             <div key={feature}>
                                 <input
                                     type="checkbox"
@@ -58,12 +91,15 @@ export default function Browse_games() {
                                     name="accessibility"
                                     value={feature.toLowerCase().replace(/[\s&-]/g, "_")}
                                 />
-                                <label htmlFor={feature.toLowerCase().replace(/[\s&-]/g, "_")}>{feature}</label>
+                                <label htmlFor={feature.toLowerCase().replace(/[\s&-]/g, "_")}>
+                                    {feature}
+                                </label>
                             </div>
                         ))}
                     </form>
                 </div>
 
+                {/* Main Game Area */}
                 <div className="main_game_area">
                     <div className="header">
                         <h4>Browse Games</h4>
@@ -74,7 +110,12 @@ export default function Browse_games() {
                     </div>
 
                     <div className="search-bar" id="search-bar">
-                        <input type="text" id="search-input" className="search-input" placeholder="Search for games..." />
+                        <input
+                            type="text"
+                            id="search-input"
+                            className="search-input"
+                            placeholder="Search for games..."
+                        />
                     </div>
 
                     <div className="game-list">
@@ -85,13 +126,17 @@ export default function Browse_games() {
                         ) : (
                             games.map((game) => (
                                 <Link to={`/games/${game.game_id}`} key={game.game_id} className="game">
-                                    <img src={game.images?.[0] ?? "placeholder.jpg"} alt={game.name ?? "Unnamed Game"} />
+                                    <img
+                                        src={game.images?.[0] ?? "placeholder.jpg"}
+                                        alt={game.name ?? "Unnamed Game"}
+                                    />
                                     <div className="game-title">{game.name ?? "Unnamed Game"}</div>
-                                    <div className="game-description">{game.short_description ?? "No description available."}</div>
+                                    <div className="game-description">
+                                        {game.short_description ?? "No description available."}
+                                    </div>
                                     <div className="game-meta">
                                         <span>{game.genres?.join(", ") ?? "No genres"}</span>
                                         <span>{game.platform ?? "Unknown platform"}</span>
-                                        <span className="game-rating">⭐ {game.average_rating ?? "No Rating"}</span>
                                     </div>
                                 </Link>
                             ))
@@ -101,8 +146,12 @@ export default function Browse_games() {
             </div>
 
             <footer>
-                <div className="footer-title">AccessPlay - Discover Accessible Mobile Games</div>
-                <div className="footer-note">Built with accessibility in mind. WCAG AA compliant with voice control support.</div>
+                <div className="footer-title">
+                    AccessPlay - Discover Accessible Mobile Games
+                </div>
+                <div className="footer-note">
+                    Built with accessibility in mind. WCAG AA compliant with voice control support.
+                </div>
                 <div>&copy; {new Date().getFullYear()} AccessPlay. All rights reserved.</div>
             </footer>
         </div>

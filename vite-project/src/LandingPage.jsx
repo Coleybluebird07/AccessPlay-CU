@@ -1,10 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import './landing-page.css';
-
-// helper navigation function
-const goToBrowseGames = () => {
-  window.location.href = '/browse-games';
-};
 
 // Icon components
 const SearchIcon = (props) => (
@@ -31,8 +26,8 @@ const HeroSection = () => (
       <h1 className="hero-title">
         Find games with the accessibility features you need. Our platform helps you discover mobile games designed with disability support in mind.
       </h1>
-      <button className="hero-btn" onClick={goToBrowseGames}>
-        Start Browsing <ArrowRightIcon style={{ marginLeft: 8 }} />
+      <button className="hero-btn">
+        Start Browsing <ArrowRightIcon style={{marginLeft:8}} />
       </button>
     </div>
   </section>
@@ -114,8 +109,8 @@ const CallToActionSection = () => (
       <div className="cta-main">
         Browse our curated collection of accessible mobile games and find titles that match your needs and interests.
       </div>
-      <button className="cta-btn" onClick={goToBrowseGames}>
-        Browse All Games <ArrowRightIcon style={{ marginLeft: 8 }} />
+      <button className="cta-btn">
+        Browse All Games <ArrowRightIcon style={{marginLeft:8}} />
       </button>
     </div>
   </section>
@@ -129,63 +124,7 @@ const Footer = () => (
   </footer>
 );
 
-const MicrophoneButton = ({ onResult }) => {
-  const recognitionRef = useRef(null);
-  const [popup, setPopup] = useState(null);
-  const popupTimeout = useRef(null);
-
-  const handleMicClick = () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert('Speech recognition not supported in this browser.');
-      return;
-    }
-    if (!recognitionRef.current) {
-      recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = false;
-      recognitionRef.current.interimResults = false;
-      recognitionRef.current.lang = 'en-US';
-      recognitionRef.current.onresult = (event) => {
-        const transcript = event.results[0][0].transcript.toLowerCase();
-        setPopup(transcript);
-        if (popupTimeout.current) clearTimeout(popupTimeout.current);
-        popupTimeout.current = setTimeout(() => setPopup(null), 2500);
-        onResult(transcript);
-      };
-    }
-    recognitionRef.current.start();
-  };
-
-  return (
-    <>
-      <button
-        onClick={handleMicClick}
-        aria-label="Activate voice search"
-        className="mic-fab"
-      >
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="9" y="2" width="6" height="12" rx="3" fill="#2563eb" stroke="#2563eb" />
-          <path d="M5 10v2a7 7 0 0 0 14 0v-2" stroke="#2563eb" />
-          <line x1="12" y1="19" x2="12" y2="22" stroke="#2563eb" />
-          <line x1="8" y1="22" x2="16" y2="22" stroke="#2563eb" />
-        </svg>
-      </button>
-      {popup && (
-        <div className="mic-popup">{popup}</div>
-      )}
-    </>
-  );
-};
-
 export default function LandingPage() {
-  const handleVoiceCommand = (transcript) => {
-    if (transcript.includes('browse games')) {
-      window.location.href = '/browse-games';
-    } else {
-      alert('Sorry, command not recognized.');
-    }
-  };
-
   return (
     <div>
       <main>
@@ -195,7 +134,6 @@ export default function LandingPage() {
         <CallToActionSection />
       </main>
       <Footer />
-      <MicrophoneButton onResult={handleVoiceCommand} />
     </div>
   );
 }
