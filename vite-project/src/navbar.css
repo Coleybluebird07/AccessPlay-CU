@@ -1,16 +1,17 @@
 .navbar {
-  background-color: #ffffff;
+  background-color: #f8f9fa; /* ensure opaque bg */
   border-bottom: 2px solid #e5edff;
   padding: 10px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
-  z-index: 100;
+  z-index: 1020; /* above content */
   box-sizing: border-box;
   gap: 12px;
+  margin-bottom: 12px; /* space below nav */
 }
 
 .nav-logo {
@@ -54,7 +55,7 @@
 }
 
 .page-wrapper {
-  padding-top: 90px;
+  padding-top: 8px;
 }
 
 @media (max-width: 640px) {
