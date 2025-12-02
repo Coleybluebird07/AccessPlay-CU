@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { withConn } from "./db.js";
-
+//imports
 const router = Router();
 
 // Helper to safely convert BigInt values to Numbers/strings for JSON
@@ -9,7 +9,7 @@ function serialiseRow(row) {
   const out = {};
   for (const [key, value] of Object.entries(row)) {
     if (typeof value === "bigint") {
-      // Most of our BIGINTs are ids and safe to cast for this UI
+      // convert bigint to numbers (safe for admin ui usage in this context)
       out[key] = Number(value);
     } else {
       out[key] = value;
@@ -18,14 +18,19 @@ function serialiseRow(row) {
   return out;
 }
 
+// serialises an array of rows using serialiseRow()
 function serialiseRows(rows) {
   if (!Array.isArray(rows)) return [];
   return rows.map(serialiseRow);
 }
 
-// All routes here are mounted behind authMiddleware + requireAdmin in index.js
+// All routes here are mounted behind authMiddleware (user must be logged in) + requireAdmin (user must be an admin)
+// so theses routes are admin only.
 
 // ---- Users ----
+
+//get /admin/users. returns the 200 most recent users in the admin panel for admin management.
+//will be increased if needed. but in this context 200 is far more than enough.
 router.get("/users", async (req, res) => {
   try {
     const usersRaw = await withConn(async (conn) => {
@@ -42,6 +47,7 @@ router.get("/users", async (req, res) => {
   }
 });
 
+// patch /admin/users/:id/admin. updates a user's is_admin flag (true / false (1 / 0))
 router.patch("/users/:id/admin", async (req, res) => {
   const userId = Number(req.params.id);
   const { is_admin } = req.body ?? {};
@@ -63,6 +69,7 @@ router.patch("/users/:id/admin", async (req, res) => {
   }
 });
 
+// delete /admin/users/:id. deletes a user by their id.
 router.delete("/users/:id", async (req, res) => {
   const userId = Number(req.params.id);
   if (Number.isNaN(userId)) {
@@ -81,6 +88,8 @@ router.delete("/users/:id", async (req, res) => {
 });
 
 // ---- Games ----
+
+//GET admin/games. fetches the latest 200 games.
 router.get("/games", async (req, res) => {
   try {
     const gamesRaw = await withConn(async (conn) => {
@@ -95,95 +104,7 @@ router.get("/games", async (req, res) => {
   }
 });
 
-router.post("/games", async (req, res) => {
-  const {
-    name,
-    short_description,
-    detailed_description,
-    platform,
-    release_date,
-    developer,
-    publisher,
-    redirect_url_android,
-    redirect_url_ios,
-  } = req.body ?? {};
-
-  if (!name || !short_description || !detailed_description || !platform || !release_date || !developer || !publisher || !redirect_url_android || !redirect_url_ios) {
-    return res.status(400).json({ ok: false, error: "Missing required game fields" });
-  }
-
-  try {
-    const insertedId = await withConn(async (conn) => {
-      const result = await conn.query(
-        `INSERT INTO games
-        (name, short_description, detailed_description, platform, release_date, developer, publisher, redirect_url_android, redirect_url_ios)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-          name,
-          short_description,
-          detailed_description,
-          platform,
-          release_date,
-          developer,
-          publisher,
-          redirect_url_android,
-          redirect_url_ios,
-        ]
-      );
-      return Number(result.insertId);
-    });
-
-    return res.status(201).json({ ok: true, game_id: insertedId });
-  } catch (err) {
-    console.error("Admin POST /games error:", err);
-    return res.status(500).json({ ok: false, error: "Failed to create game" });
-  }
-});
-
-router.patch("/games/:id", async (req, res) => {
-  const gameId = Number(req.params.id);
-  if (Number.isNaN(gameId)) {
-    return res.status(400).json({ ok: false, error: "Invalid game id" });
-  }
-
-  const allowedFields = [
-    "name",
-    "short_description",
-    "detailed_description",
-    "platform",
-    "release_date",
-    "developer",
-    "publisher",
-    "redirect_url_android",
-    "redirect_url_ios",
-  ];
-
-  const updates = [];
-  const values = [];
-  for (const field of allowedFields) {
-    if (Object.prototype.hasOwnProperty.call(req.body ?? {}, field)) {
-      updates.push(`${field} = ?`);
-      values.push(req.body[field]);
-    }
-  }
-
-  if (!updates.length) {
-    return res.json({ ok: true });
-  }
-
-  values.push(gameId);
-
-  try {
-    await withConn(async (conn) => {
-      await conn.query(`UPDATE games SET ${updates.join(", ")} WHERE game_id = ?`, values);
-    });
-    return res.json({ ok: true });
-  } catch (err) {
-    console.error("Admin PATCH /games/:id error:", err);
-    return res.status(500).json({ ok: false, error: "Failed to update game" });
-  }
-});
-
+//deletes /admin/games/:id (deletes a game by its id)
 router.delete("/games/:id", async (req, res) => {
   const gameId = Number(req.params.id);
   if (Number.isNaN(gameId)) {
@@ -202,6 +123,8 @@ router.delete("/games/:id", async (req, res) => {
 });
 
 // ---- Reviews ----
+
+//GETs admin/reviews. fetches the latest 200 reviews.
 router.get("/reviews", async (req, res) => {
   try {
     const reviewsRaw = await withConn(async (conn) => {
@@ -224,6 +147,7 @@ router.get("/reviews", async (req, res) => {
   }
 });
 
+//DELETE /admin/reviews/:id (deletes a review by its id).
 router.delete("/reviews/:id", async (req, res) => {
   const reviewId = Number(req.params.id);
   if (Number.isNaN(reviewId)) {
@@ -242,4 +166,3 @@ router.delete("/reviews/:id", async (req, res) => {
 });
 
 export default router;
-

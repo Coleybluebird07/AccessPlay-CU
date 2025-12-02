@@ -120,4 +120,3 @@ CREATE TRIGGER IF NOT EXISTS update_avg_rating_after_update
     )
     WHERE game_id = NEW.game_id;
 
-
