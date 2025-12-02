@@ -1,4 +1,4 @@
-USE `group_test_auth`;
+USE `group7_auth`;
 
 
 
