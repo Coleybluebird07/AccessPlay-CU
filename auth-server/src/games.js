@@ -1,4 +1,4 @@
-import { Router } from "express";
+import {query, Router} from "express";
 import { withConn } from "./db.js";
 import { authMiddleware } from "./authMiddleware.js";
 
@@ -6,9 +6,13 @@ const router = Router();
 
 // Get all games
 router.get("/", async (req, res) => {
+    const search = req.query.search || "";
+    const genres = req.query.genres ? req.query.genres.split(",") : [];
+    const features = req.query.features ? req.query.features.split(",") : [];
+
     try {
         const games = await withConn(async (conn) => {
-            const rows = await conn.query(`
+            let sql = `
                 SELECT
                     g.game_id,
                     g.name,
@@ -31,8 +35,50 @@ router.get("/", async (req, res) => {
                      FROM reviews r
                      WHERE r.game_id = g.game_id) AS average_rating
                 FROM games g
-                ORDER BY g.created_at DESC
-            `);
+                WHERE 1 = 1
+            `;
+
+            let params = [];
+
+            // SEARCH
+            if (search) {
+                sql += ` AND (g.name LIKE ? OR g.short_description LIKE ? OR g.detailed_description LIKE ?)`;
+                params.push(`%${search}%`, `%${search}%`, `%${search}%`);
+            }
+
+            // GENRE FILTER
+            if (genres.length > 0) {
+                sql += `
+                AND g.game_id IN (
+                SELECT gg.game_id
+                FROM game_genres gg
+                JOIN genres ge ON ge.genre_id = gg.genre_id
+                WHERE ge.genre_name IN (?)
+                GROUP BY gg.game_id
+                HAVING COUNT(DISTINCT ge.genre_name) = ?
+                )
+                `;
+                params.push(genres, genres.length);
+            }
+
+            // ACCESSIBILITY FEATURE FILTER
+            if (features.length > 0) {
+                sql += `
+                AND g.game_id IN (
+                SELECT gf.game_id
+                FROM game_features gf
+                JOIN accessibility_features af ON af.feature_id = gf.feature_id
+                WHERE af.feature_name IN (?)
+                GROUP BY gf.game_id
+                HAVING COUNT(DISTINCT af.feature_name) = ?
+                )
+                `;
+                params.push(features, features.length);
+            }
+
+            sql += ` ORDER BY g.created_at DESC`;
+
+            const rows = await conn.query(sql, params);
 
             return rows.map((row) => ({
                 ...row,
@@ -41,8 +87,9 @@ router.get("/", async (req, res) => {
         });
 
         res.json(games);
+
     } catch (err) {
-        console.error(err);
+        console.error("Search/filter error: ", err);
         res.status(500).json({ ok: false, error: "Database error" });
     }
 });

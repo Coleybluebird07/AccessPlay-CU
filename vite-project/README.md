@@ -1,16 +1,152 @@
-# React + Vite
+# AccessPlay — Frontend (Vite + React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Minimal, production-ready frontend for AccessPlay built with Vite, React and React Router.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of contents
+- [Overview](#overview)
+- [Features](#features)
+- [Tech stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Quick start (Windows)](#quick-start-windows)
+- [Environment variables](#environment-variables)
+- [Available scripts](#available-scripts)
+- [Project structure](#project-structure)
+- [API usage example](#api-usage-example)
+- [Routing overview](#routing-overview)
+- [Testing & linting](#testing--linting)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [License](#license)
 
-## React Compiler
+## Overview
+A single-page React application scaffolded with Vite to provide fast HMR during development and optimized production builds. Designed to consume an authentication/game API via `VITE_API_URL`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
+- Fast development with Vite HMR
+- React + React Router for SPA routing
+- Unit tests with Vitest
+- ESLint rules and conventions
+- Simple environment-based API configuration
 
-## Expanding the ESLint configuration
+## Tech stack
+- `vite`
+- `react`, `react-dom`
+- `react-router-dom`
+- `vitest`
+- `eslint`
+- Vanilla CSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Prerequisites
+- Node.js: Recommended `>= 20` (Vite 7+)
+- npm: `v8+`
+- OS: Windows / macOS / Linux
+- Backend server accessible (see repository `../auth-server`)
+
+## Quick start (Windows)
+1. Install dependencies:
+   ```powershell
+   npm install
+   ```
+2. Set `VITE_API_URL` (temporary PowerShell session) and start dev server:
+   ```powershell
+   $env:VITE_API_URL="http://localhost:4000"; npm run dev
+   ```
+   Or create a `.`env` file at project root:
+   ```ini
+   VITE_API_URL=http://localhost:4000
+   ```
+3. Open the app:
+    - Development: `http://localhost:5173`
+4. Build / preview:
+   ```powershell
+   npm run build
+   npm run preview
+   ```
+
+## Environment variables
+- Vite only exposes variables prefixed with `VITE_`.
+- Recommended variable: `VITE_API_URL`
+- Access in code:
+  ```javascript
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+  ```
+
+## Available scripts
+- `npm run dev` — start Vite dev server
+- `npm run build` — production build
+- `npm run preview` — preview production build
+- `npm run test` — run Vitest (`--environment jsdom`)
+- `npm run lint` — run ESLint
+
+Key files: `package.json`, `vite.config.js`, `index.html`
+
+## Project structure
+```
+vite-project/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── pages/
+│   ├── routes/
+│   ├── services/
+│   ├── styles/
+│   ├── tests/
+│   ├── App.jsx
+│   └── main.jsx
+├── .env
+├── index.html
+├── package.json
+└── vite.config.js
+```
+
+## API usage example
+- Centralize API calls in `src/services/api.js`. Example:
+  ```javascript
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+  export async function login(email, password) {
+    const res = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    return res.json();
+  }
+  ```
+- In UI, show loading / error states and prefer `useNavigate` from `react-router-dom` over `window.location`.
+
+## Routing overview
+- `/` — HomePage
+- `/login` — LoginPage
+- `/register` — RegisterPage
+- `/games` — GamesListPage
+- `/games/:id` — GameDetailPage
+- `/profile` — UserProfilePage
+- `*` — NotFoundPage
+
+## Testing & linting
+- Tests located in `src/tests/`
+- Run tests:
+  ```powershell
+  npm run test
+  ```
+- Lint code:
+  ```powershell
+  npm run lint
+  ```
+
+## Troubleshooting
+- If `import.meta.env` is `undefined`, ensure dev server is running and variable name is prefixed with `VITE_`.
+- Static assets not loading: import assets from `src/assets` or use absolute `/src/...` paths.
+- Node engine mismatch: upgrade Node to recommended version.
+- If issues persist: remove `node_modules` and reinstall (`npm install`).
+
+## Contributing
+- Follow existing code style and lint rules.
+- Add unit tests for new features in `src/tests/`.
+- Open PRs against the main branch with a clear description and related issue reference.
+
+## License
+This project is licensed under the MIT License
