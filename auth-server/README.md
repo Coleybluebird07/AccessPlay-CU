@@ -1,52 +1,154 @@
 # Minimal Auth Server (Express + MariaDB)
 
-This is a tiny REST API exposing `/api/auth/register` and `/api/auth/login` for your React app.
+Tiny REST API for authentication and basic game/review data used by the AccessPlay frontend.
 
-## Endpoints
+## Quick links
+- Source: `src/`
+- DB schema: `schema.sql`
+- Sample data: `data.sql`
+- Tests: `test/`
+- Env example: `.env.example`
 
-- `POST /api/auth/register` → { email, password } → creates a user (hashed) and returns `{ ok, user, token }`
-- `POST /api/auth/login` → { email, password } → verifies credentials and returns `{ ok, user, token }`
+## Features
+- Register & login (`/api/auth/register`, `/api/auth/login`)
+- Password hashing with `bcrypt` (12 rounds)
+- JWT authentication
+- Input validation with `Joi`
+- MariaDB connection pooling
+- Basic game, genre and review endpoints
+- CORS support for Vite frontend
 
-## Quick start
+## Requirements
+- Node.js (v14+ recommended)
+- npm
+- MariaDB (local or Docker)
+- Git
+- Optional: Docker, Postman
 
-1) Install MariaDB locally or run via Docker.
+## Environment (\`.env\`)
+Copy `.​env.example` → `.​env` and fill values:
 
-   **Windows installer:** https://mariadb.org/download/
-   - During setup, create a root password you remember.
+Required keys:
+- `DB_HOST`
+- `DB_PORT`
+- `DB_USER`
+- `DB_PASSWORD`
+- `DB_NAME`
+- `JWT_SECRET`
+- `JWT_EXPIRES` (e.g. `1h`)
+- `PORT` (optional)
+- `CORS_ORIGIN` (e.g. `http://localhost:5173`)
 
-   **Docker (optional):**
-   ```bash
-   docker run --name mariadb -e MARIADB_ROOT_PASSWORD=pass -p 3306:3306 -d mariadb:11
-   ```
+Configure environment (examples):
+- macOS / Linux / Git Bash:
+  ```bash
+  cp .env.example .env
+  ```
+- Windows Command Prompt:
+  ```bat
+  copy .env.example .env
+  ```
+- PowerShell:
+  ```powershell
+  Copy-Item .env.example .env
+  ```
 
-2) Create DB and table:
-   - Open a MariaDB client (e.g., `mysql` CLI or HeidiSQL) and run `schema.sql`:
-
-   ```sql
-   SOURCE schema.sql;
-   ```
-
-3) Configure environment:
-   - Copy `.env.example` → `.env` and fill in values.
-
-4) Install dependencies and run:
+## Setup
+1. Install:
    ```bash
    npm install
+   ```
+2. Create DB and tables:
+   - Run `schema.sql` with your MariaDB client:
+     ```sql
+     SOURCE schema.sql;
+     ```
+   - (Optional) Load sample data:
+     ```sql
+     SOURCE data.sql;
+     ```
+   - Or:
+     ```bash
+     mysql -u root -p < schema.sql
+     ```
+3. Start server (development):
+   ```bash
    npm run dev
    ```
+4. Start server (production):
+   - PowerShell:
+     ```powershell
+     $env:NODE_ENV='production'; npm start
+     ```
+   - Or install `cross-env` and set `"start": "cross-env NODE_ENV=production node src/index.js"` in `package.json`.
 
-5) Test:
-   ```bash
-   curl -X POST http://localhost:4000/api/auth/register -H "Content-Type: application/json" \
-     -d '{ "email":"test@example.com", "password":"Password123!" }'
+### Windows note
+`NODE_ENV=production node ...` is POSIX-style and does not work in CMD. Use PowerShell or `cross-env`.
 
-   curl -X POST http://localhost:4000/api/auth/login -H "Content-Type: application/json" \
-     -d '{ "email":"test@example.com", "password":"Password123!" }'
-   ```
+## API (summary)
+All endpoints use JSON.
+
+- `POST /api/auth/register`  
+  Body: `{ "email", "password" }` → returns `{ ok, user, token }`
+
+- `POST /api/auth/login`  
+  Body: `{ "email", "password" }` → returns `{ ok, user, token }`
+
+- `POST /api/auth/change-password` (protected)  
+  Body: `{ currentPassword, newPassword }`
+
+- `POST /api/auth/change-email` (protected)  
+  Body: `{ newEmail, password }`
+
+Protected routes require header:
+```
+Authorization: Bearer <token>
+```
+
+## Database (summary)
+Default DB name: `group7_auth`  
+Key tables: `users`, `games`, `genres`, `reviews`, `game_images`, `accessibility_features`, `game_features`, `game_genres`, `user_favorites`.  
+Triggers update `games.avg_rating` on review changes.
+
+Reset DB:
+```sql
+DROP DATABASE IF EXISTS group7_auth;
+SOURCE schema.sql;
+SOURCE data.sql;
+```
+
+## Testing
+- Tests in `test/` use `vitest` and `supertest`.
+- Use a separate test DB and implement setup/teardown in `test-db.js`.
+- Run:
+  ```bash
+  npm test
+  ```
+
+## Common commands
+- `npm install`
+- `npm run dev` — dev server (nodemon)
+- `npm start` — production start
+- `npm test`
 
 ## CORS
-Set `CORS_ORIGIN` in `.env` to your Vite dev URL (usually `http://localhost:5173`).
+Set `CORS_ORIGIN` in `.env` to your frontend URL (e.g. `http://localhost:5173`).
 
-## Notes
-- Passwords are hashed with bcrypt (12 rounds).
-- A JWT is returned; store it in memory (e.g., React state) or `localStorage` if needed.
+## Security notes
+- Use a strong `JWT_SECRET` and HTTPS in production.
+- Store JWTs securely (in memory or secure storage).
+- Validate inputs via `Joi`.
+
+## Troubleshooting
+- DB connection refused: check `DB_HOST`, `DB_USER`, `DB_PASSWORD`, and DB service.
+- `NODE_ENV` issues on Windows: use PowerShell or `cross-env`.
+- Port conflicts: change `PORT` in `.env`.
+- If bcrypt fails: ensure native build tools are available for your Node version.
+
+## Contributing
+- Follow existing patterns in `src/`
+- Add tests for new endpoints
+- Update `test-db.js` for automated test DB setup
+
+## License
+MIT License. See `LICENSE` file for details.

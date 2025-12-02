@@ -45,9 +45,7 @@ html, body {
     overflow-y: auto;
     top: 100px;
     max-height: calc(100vh - 120px);
-    padding: 16px;
     border-right: 1px solid #e5e7eb;
-    background-color: #f9fafb;
 }
 
 .filters h5 {
