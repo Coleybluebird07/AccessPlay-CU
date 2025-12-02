@@ -69,78 +69,29 @@ export default function GameProfile() {
         <div className="game-profile-container">
 
             {/* Hero Section */}
-            <div className="game-hero">
-                <img
-                    className="hero-image"
-                    src={game.images?.[0] ?? "/placeholder.jpg"}
-                    alt={game.name}
-                />
-                <div className="hero-overlay">
-                    <h1 className="hero-title">{game.name}</h1>
-                    <p className="hero-subtitle">{game.short_description}</p>
-                    <div className="hero-rating">
-                        ⭐ {game.average_rating ?? "No Rating"}
+            <div className="card">
+                <div className="card-body">
+                    <div className="game-hero">
+                        <img
+                            className="hero-image"
+                            src={game.images?.[0] ?? "/placeholder.jpg"}
+                            alt={game.name}
+                        />
+                        <div className="hero-overlay">
+                            <h1 className="hero-title">{game.name}</h1>
+                            <p className="hero-subtitle">{game.short_description}</p>
+                            <div className="hero-rating">
+                                ⭐ {game.average_rating ?? "No Rating"}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
+
             {/* Main Content */}
             <div className="profile-content">
-
-                {/* Left Column */}
                 <div className="left-column">
-                    <h2>About This Game</h2>
-                    <p className="game-description">
-                        {game.detailed_description}
-                    </p>
-
-                    <h2>Genres</h2>
-                    <div className="genre-list">
-                        {game.genres?.map((g, i) => (
-                            <span key={i} className="genre-tag">{g}</span>
-                        ))}
-                    </div>
-
-                    <h2>Accessibility Features</h2>
-                    <ul className="accessibility-list">
-                        {(game.accessibility || ["Color Blind Mode", "Captions", "Auto Save"]).map((feat, index) => (
-                            <li key={index}>{feat}</li>
-                        ))}
-                    </ul>
-                </div>
-
-                {/* Right Column */}
-                <div className="right-column">
-                    <div className="download-section">
-                        <h3>Download</h3>
-
-                        <a
-                            href={game.redirect_url_android}
-                            target="_blank"
-                            className="download-btn android"
-                        >
-                            Download for Android
-                        </a>
-
-                        <a
-                            href={game.redirect_url_ios}
-                            target="_blank"
-                            className="download-btn ios"
-                        >
-                            Download for iOS
-                        </a>
-                    </div>
-
-                    <div className="game-meta-box">
-                        <h3>Game Details</h3>
-
-                        <div className="meta-item"><strong>Developer:</strong> {game.developer}</div>
-                        <div className="meta-item"><strong>Publisher:</strong> {game.publisher}</div>
-                        <div className="meta-item"><strong>Platform:</strong> {game.platform}</div>
-                        <div className="meta-item"><strong>Release Date:</strong> {game.release_date}</div>
-                    </div>
-                </div>
-                <div className="col-12 col-lg-8">
                     <div className="card">
                         <div className="card-body">
                             <h2 className="h5">About This Game</h2>
@@ -162,8 +113,8 @@ export default function GameProfile() {
                         </div>
                     </div>
                 </div>
-                <div className="col-12 col-lg-4">
-                    <div className="card mb-3">
+                <div className="right-column">
+                    <div className="card">
                         <div className="card-body">
                             <h3 className="h6">Download</h3>
                             <a href={game.redirect_url_android} target="_blank" className="btn btn-success w-100 mb-2">Download for Android</a>
@@ -180,7 +131,7 @@ export default function GameProfile() {
                         </div>
                     </div>
                 </div>
-                <div className="col-12">
+                <div className="reviews-section">
                     <div className="card">
                         <div className="card-body">
                             <h2 className="h5">User Reviews</h2>
@@ -218,7 +169,11 @@ export default function GameProfile() {
                                     <div key={review.review_id} className="border rounded p-3 mb-2">
                                         <div className="d-flex justify-content-between align-items-center">
                                             <span className="fw-semibold">{review.reviewer_email}</span>
-                                            <span className="text-warning">{"⭐".repeat(review.rating)}</span>
+                                            <span className="text-warning">{[1, 2, 3, 4, 5].map(num => (
+                                                num <= review.rating
+                                                    ? <span key={num} className="star-filled">★</span>
+                                                    : <span key={num} className="star-empty">☆</span>
+                                            ))}</span>
                                         </div>
                                         <p className="mb-1">{review.comment}</p>
                                         <small className="text-muted">{new Date(review.created_at).toLocaleDateString()}</small>
@@ -231,13 +186,9 @@ export default function GameProfile() {
                     </div>
                 </div>
             </div>
-            <footer className="mt-4 text-center">
-                <div className="fw-bold">
-                    AccessPlay - Discover Accessible Mobile Games
-                </div>
-                <div className="text-muted">
-                    Built with accessibility in mind. WCAG AA compliant with voice control support.
-                </div>
+            <footer>
+                <div className="footer-title">AccessPlay - Discover Accessible Mobile Games</div>
+                <div className="footer-note">Built with accessibility in mind. WCAG AA compliant with voice control support.</div>
                 <div>&copy; {new Date().getFullYear()} AccessPlay. All rights reserved.</div>
             </footer>
         </div>

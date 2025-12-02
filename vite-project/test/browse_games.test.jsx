@@ -1,57 +1,141 @@
-import { test, expect, vi } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
+import { vi, test, expect, beforeEach, afterEach } from "vitest";
+import { MemoryRouter } from "react-router-dom";
 import Browse_games from "../src/components/browser_games/browse_game.jsx";
 
-// Mock fetch response
-const mockGames = [
-    {
-        game_id: 1,
-        name: "Mock Game 1",
-        short_description: "A fun mock game",
-        genres: ["Puzzle", "Adventure"],
-        platform: "iOS",
-        images: ["mock1.jpg"],
-    },
-    {
-        game_id: 2,
-        name: "Mock Game 2",
-        short_description: "Another mock game",
-        genres: ["RPG"],
-        platform: "Android",
-        images: [],
-    },
-];
-
-// Stub global fetch
-vi.stubGlobal("fetch", vi.fn(() =>
-    Promise.resolve({
-        json: () => Promise.resolve(mockGames)
-    })
-));
-
-test("shows 'No games found' initially if fetch hasn't resolved", () => {
-    render(<Browse_games />);
-    const noGames = screen.getByText(/No games found/i);
-    expect(noGames).not.toBeNull();
+// RESET BETWEEN TESTS
+afterEach(() => {
+    cleanup();
+    vi.clearAllMocks();
 });
 
-test("renders fetched games correctly", async () => {
-    render(<Browse_games />);
+// GLOBAL FETCH MOCK
+beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn(() =>
+        Promise.resolve({
+            json: () => Promise.resolve([
+                { game_id: 1, name: "Puzzle Quest", genres: ["Puzzle", "Casual"], images: ["puzzle.jpg"], platform: "iOS" },
+                { game_id: 2, name: "Adventure Hero", genres: ["Adventure"], images: [], platform: "Android" },
+                { game_id: 3, name: "RPG Masters", genres: ["RPG"], images: [], platform: "Android" }
+            ])
+        })
+    ));
+});
 
-    // Wait for the fetch to complete and component to update
+// Utility
+function renderUI() {
+    return render(
+        <MemoryRouter>
+            <Browse_games />
+        </MemoryRouter>
+    );
+}
+
+/* TEST 1 — SEARCH FILTER */
+test("search input triggers fetch with correct query", async () => {
+    renderUI();
+
+    const input = screen.getAllByPlaceholderText("Search for games...")[0];
+    fireEvent.change(input, { target: { value: "Puzzle" } });
+
     await waitFor(() => {
-        // Multiple elements might exist if React Strict Mode is enabled
-        const game1Elements = screen.getAllByText("Mock Game 1");
-        expect(game1Elements.length).toBeGreaterThan(0);
+        expect(fetch).toHaveBeenLastCalledWith(
+            expect.stringContaining("search=Puzzle")
+        );
+    });
+});
 
-        const game2Elements = screen.getAllByText("Mock Game 2");
-        expect(game2Elements.length).toBeGreaterThan(0);
+/* TEST 2 — GENRE FILTER */
+test("genre checkbox triggers correct fetch", async () => {
+    renderUI();
+
+    fireEvent.click(screen.getAllByLabelText("Puzzle")[0]);
+
+    await waitFor(() => {
+        expect(fetch).toHaveBeenLastCalledWith(
+            expect.stringContaining("genres=Puzzle")
+        );
+    });
+});
+
+/* TEST 3 — MULTIPLE GENRES */
+test("multiple genres update encoded query", async () => {
+    renderUI();
+
+    fireEvent.click(screen.getAllByLabelText("Puzzle")[0]);
+    fireEvent.click(screen.getAllByLabelText("Casual")[0]);
+
+    await waitFor(() => {
+        expect(fetch).toHaveBeenLastCalledWith(
+            expect.stringContaining("genres=Puzzle%2CCasual")
+        );
+    });
+});
+
+/* TEST 4 — SINGLE ACCESSIBILITY FEATURE */
+test("single feature checkbox works", async () => {
+    renderUI();
+
+    fireEvent.click(screen.getAllByLabelText("Color Blind Mode")[0]);
+
+    await waitFor(() => {
+        expect(fetch).toHaveBeenLastCalledWith(
+            expect.stringContaining("features=Color+Blind+Mode")
+        );
+    });
+});
+
+/* TEST 5 — MULTIPLE ACCESSIBILITY FEATURES */
+test("multiple features trigger encoded query", async () => {
+    renderUI();
+
+    fireEvent.click(screen.getAllByLabelText("Color Blind Mode")[0]);
+    fireEvent.click(screen.getAllByLabelText("Auto-Save Feature")[0]);
+
+    await waitFor(() => {
+        expect(fetch).toHaveBeenLastCalledWith(
+            expect.stringContaining("features=Color+Blind+Mode%2CAuto-Save+Feature")
+        );
+    });
+});
+
+/* TEST 6 — COMBINED FILTERS */
+test("combined filters generate correct encoded query", async () => {
+    renderUI();
+
+    fireEvent.change(screen.getAllByPlaceholderText("Search for games...")[0], {
+        target: { value: "Puzzle" }
     });
 
-    // Check images safely using getAllByAltText
-    const img1 = screen.getAllByAltText("Mock Game 1")[0];
-    expect(img1.getAttribute("src")).toBe("mock1.jpg");
+    fireEvent.click(screen.getAllByLabelText("Puzzle")[0]);
+    fireEvent.click(screen.getAllByLabelText("Color Blind Mode")[0]);
 
-    const img2 = screen.getAllByAltText("Mock Game 2")[0];
-    expect(img2.getAttribute("src")).toBe("placeholder.jpg");
+    await waitFor(() => {
+        expect(fetch).toHaveBeenLastCalledWith(
+            expect.stringContaining("search=Puzzle")
+        );
+        expect(fetch).toHaveBeenLastCalledWith(
+            expect.stringContaining("genres=Puzzle")
+        );
+        expect(fetch).toHaveBeenLastCalledWith(
+            expect.stringContaining("features=Color+Blind+Mode")
+        );
+    });
+});
+
+/* TEST 7 — MOBILE FILTER PANEL */
+test("mobile filter panel opens & closes", async () => {
+    renderUI();
+
+    const button = screen.getAllByText("Filters")[0];
+    fireEvent.click(button);
+
+    expect(document.querySelector(".filters.visible")).not.toBeNull();
+
+    const close = screen.getAllByText("✕")[0];
+    fireEvent.click(close);
+
+    await waitFor(() => {
+        expect(document.querySelector(".filters.visible")).toBeNull();
+    });
 });
