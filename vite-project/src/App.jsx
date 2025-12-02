@@ -12,7 +12,7 @@ import './components/browser_games/browse_game.css';
 import AccountPage from "./AccountPage";
 import { isLoggedIn, getUserEmail, logout } from "./authUtils";
 import GameProfile from "./components/game_profile/game_profile.jsx";
-
+import ContactPage from './ContactPage';
 
 export default function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -69,6 +69,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/browse-games" element={<Browse_games />} />
           <Route path="/games/:id" element={<GameProfile />} />
+          <Route path="/contact" element={<ContactPage />} />
           {/* Optional: 404 route */}
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
