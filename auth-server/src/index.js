@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import 'dotenv/config';
 import authRouter from "./auth.js";
 import gamesRouter from "./games.js";
+import adminRouter from "./admin.js";
+import { authMiddleware, requireAdmin } from "./authMiddleware.js";
 
 dotenv.config();
 
@@ -21,6 +23,8 @@ app.use(morgan("dev"));
 app.get("/health", (req, res) => res.json({ ok: true }));
 app.use("/api/auth", authRouter);
 app.use("/api/games", gamesRouter);
+// Admin routes: require auth + admin
+app.use("/api/admin", authMiddleware, requireAdmin, adminRouter);
 
 app.use((req, res) => res.status(404).json({ ok: false, error: "Not found" }));
 

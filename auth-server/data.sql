@@ -141,18 +141,20 @@ INSERT INTO game_images (game_id, image_url) VALUES
 
 
 
-INSERT INTO users (email, password_hash, created_at) VALUES
-                                                         ('user10@example.com', '$2y$10$A1b2C3d4E5f6G7h8I9j0kLmNOpQrStUvWxYz1234567890abcd', '2025-01-01 10:00:00'),
-                                                         ('user11@example.com', '$2y$10$Z9y8X7w6V5u4T3s2R1q0pOnMlKjIhHgFeDcBa9876543210zyxw', '2025-01-01 10:05:00'),
-                                                         ('user12@example.com', '$2y$10$PpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHh1234567890ab', '2025-01-01 10:10:00'),
-                                                         ('user14@example.com', '$2y$10$M1n2B3v4C5x6N7m8Z9p0LqRrStUvWxYzAaBbCcDdEeFfGgHhIi', '2025-01-01 10:15:00'),
-                                                         ('user15@example.com', '$2y$10$QqWwEeRrTtYyUuIiOoPpAaSsDdFfGgHhJjKk1234567890bb', '2025-01-01 10:20:00'),
-                                                         ('user17@example.com', '$2y$10$LkJjHhGgFfDdSsAaPpOoIiUuYyTtRrEeWwQq0987654321mm', '2025-01-01 10:25:00'),
-                                                         ('user18@example.com', '$2y$10$AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRr1234567890cc', '2025-01-01 10:30:00'),
-                                                         ('user22@example.com', '$2y$10$TtRrEeWwQqYyUuIiOoPpAaSsDdFfGgHhJjKk0987654321dd', '2025-01-01 10:35:00'),
-                                                         ('user7@example.com', '$2y$10$LkJjHhGgFfDdSsAaPpOoIiUuYyTtRrEeWwQq0987654321mm', '2025-01-01 10:25:00'),
-                                                         ('user8@example.com', '$2y$10$AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRr1234567890cc', '2025-01-01 10:30:00'),
-                                                         ('user2@example.com', '$2y$10$TtRrEeWwQqYyUuIiOoPpAaSsDdFfGgHhJjKk0987654321dd', '2025-01-01 10:35:00');
+-- sql
+INSERT INTO users (email, password_hash, created_at, is_admin) VALUES
+                                                                   ('user10@example.com', '$2y$10$A1b2C3d4E5f6G7h8I9j0kLmNOpQrStUvWxYz1234567890abcd', '2025-01-01 10:00:00', 0),
+                                                                   ('user11@example.com', '$2y$10$Z9y8X7w6V5u4T3s2R1q0pOnMlKjIhHgFeDcBa9876543210zyxw', '2025-01-01 10:05:00', 0),
+                                                                   ('user12@example.com', '$2y$10$PpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHh1234567890ab', '2025-01-01 10:10:00', 0),
+                                                                   ('user14@example.com', '$2y$10$M1n2B3v4C5x6N7m8Z9p0LqRrStUvWxYzAaBbCcDdEeFfGgHhIi', '2025-01-01 10:15:00', 0),
+                                                                   ('user15@example.com', '$2y$10$QqWwEeRrTtYyUuIiOoPpAaSsDdFfGgHhJjKk1234567890bb', '2025-01-01 10:20:00', 0),
+                                                                   ('user17@example.com', '$2y$10$LkJjHhGgFfDdSsAaPpOoIiUuYyTtRrEeWwQq0987654321mm', '2025-01-01 10:25:00', 0),
+                                                                   ('user18@example.com', '$2y$10$AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRr1234567890cc', '2025-01-01 10:30:00', 0),
+                                                                   ('user22@example.com', '$2y$10$TtRrEeWwQqYyUuIiOoPpAaSsDdFfGgHhJjKk0987654321dd', '2025-01-01 10:35:00', 0),
+                                                                   ('user7@example.com',  '$2y$10$LkJjHhGgFfDdSsAaPpOoIiUuYyTtRrEeWwQq0987654321mm', '2025-01-01 10:25:00', 0),
+                                                                   ('user8@example.com',  '$2y$10$AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRr1234567890cc', '2025-01-01 10:30:00', 0),
+                                                                   ('user2@example.com',  '$2y$10$TtRrEeWwQqYyUuIiOoPpAaSsDdFfGgHhJjKk0987654321dd', '2025-01-01 10:35:00', 0),
+                                                                   ('admin@gmail.com',    '$2b$10$wA7Jd1U3pJZP.OX6Myw0ru0oZf6DkDaM1rD2s5cYwYdUkg3ZgVbFi', NOW(), 1);
 
 
 INSERT INTO reviews (game_id, user_id, rating, comment, created_at)
