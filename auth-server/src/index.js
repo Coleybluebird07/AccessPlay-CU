@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import dotenv from "dotenv";
+import 'dotenv/config';
 import authRouter from "./auth.js";
 import gamesRouter from "./games.js";
 import adminRouter from "./admin.js";

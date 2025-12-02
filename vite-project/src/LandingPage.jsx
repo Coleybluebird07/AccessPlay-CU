@@ -1,6 +1,11 @@
 import React, { useRef, useState } from 'react';
 import './landing-page.css';
 
+// helper navigation function
+const goToBrowseGames = () => {
+  window.location.href = '/browse-games';
+};
+
 // Icon components
 const SearchIcon = (props) => (
   <svg {...props} width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
@@ -26,8 +31,8 @@ const HeroSection = () => (
       <h1 className="hero-title">
         Find games with the accessibility features you need. Our platform helps you discover mobile games designed with disability support in mind.
       </h1>
-      <button className="hero-btn">
-        Start Browsing <ArrowRightIcon style={{marginLeft:8}} />
+      <button className="hero-btn" onClick={goToBrowseGames}>
+        Start Browsing <ArrowRightIcon style={{ marginLeft: 8 }} />
       </button>
     </div>
   </section>
@@ -109,9 +114,31 @@ const CallToActionSection = () => (
       <div className="cta-main">
         Browse our curated collection of accessible mobile games and find titles that match your needs and interests.
       </div>
-      <button className="cta-btn">
-        Browse All Games <ArrowRightIcon style={{marginLeft:8}} />
+      <button className="cta-btn" onClick={goToBrowseGames}>
+        Browse All Games <ArrowRightIcon style={{ marginLeft: 8 }} />
       </button>
+    </div>
+  </section>
+);
+
+const ContactSection = () => (
+  <section className="landing-contact-section">
+    <div className="contact-container">
+      <h2 className="section-title">Contact Us</h2>
+      <div className="contact-details">
+        <div className="contact-item">
+          <strong>Email:</strong> <a href="mailto:info@accessplay.co.uk">info@accessplay.co.uk</a>
+        </div>
+        <div className="contact-item">
+          <strong>Phone:</strong> <a href="tel:+442012345678">+44 20 1234 5678</a>
+        </div>
+        <div className="contact-item">
+          <strong>Hours:</strong> Mon–Fri, 9am–5pm (UK time)
+        </div>
+      </div>
+      <div style={{marginTop: '2rem'}}>
+        <a href="/contact" className="cta-btn" style={{textDecoration: 'none', fontWeight: 600}}>Go to Contact Page</a>
+      </div>
     </div>
   </section>
 );
@@ -188,6 +215,7 @@ export default function LandingPage() {
         <WhyAccessPlaySection />
         <AccessibilityFeaturesSection />
         <CallToActionSection />
+        <ContactSection />
       </main>
       <Footer />
       <MicrophoneButton onResult={handleVoiceCommand} />

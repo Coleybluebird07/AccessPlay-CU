@@ -10,8 +10,9 @@ import './landing-page.css';
 import './navbar.css';
 import './components/browser_games/browse_game.css';
 import AccountPage from "./AccountPage";
-import { isLoggedIn, getUserEmail, logout, getIsAdmin } from "./authUtils";
+import { isLoggedIn, getUserEmail, logout } from "./authUtils";
 import GameProfile from "./components/game_profile/game_profile.jsx";
+import ContactPage from './ContactPage';
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 
 
@@ -76,6 +77,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/browse-games" element={<Browse_games />} />
           <Route path="/games/:id" element={<GameProfile />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin" element={<AdminPanel />} />
           {/* Optional: 404 route */}
           <Route path="*" element={<div>Page not found</div>} />
