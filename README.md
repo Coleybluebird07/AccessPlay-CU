@@ -1,12 +1,20 @@
 # Group 7
 
+AccessPlay is a full-stack application project developed by Group 7 for Cardiff University's Software Engineering course
+using:
+- A React + Vite frontend (in `vite-project/`)
+- A Node.js + Express authentication and game data API (in `auth-server/`)
+- A MariaDB database for persistent storage
+The platform allows users to browse mobile games, filter by accessibility features, read details, accessibility support 
+and write reviews.
+it includes user registration, login, JWT authentication, and secure password handling.
 
 
 ## Getting started
+This project consists of two applications:
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- `vite-project/` — Frontend application built with Vite and React.
+- `auth-server/` — Backend API server built with Node.js and Express.
 
 ## Add your files
 
@@ -23,6 +31,8 @@ git push -uf origin main
 ## Integrate with your tools
 
 - [ ] [Set up project integrations](https://git.cardiff.ac.uk/c23044539/group-7/-/settings/integrations)
+- 
+
 
 ## Collaborate with your team
 
