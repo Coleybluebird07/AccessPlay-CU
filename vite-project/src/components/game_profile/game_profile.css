@@ -37,7 +37,7 @@ html, body {
 }
 
 
-/* HERO SECTION */
+/* GAME HERO SECTION */
 .game-hero {
     position: relative;
     width: 100%;
@@ -46,14 +46,14 @@ html, body {
     border-radius: 0 0 24px 24px;
 }
 
-.hero-image {
+.game-hero-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     filter: brightness(62%);
 }
 
-.hero-overlay {
+.game-hero-overlay {
     position: absolute;
     bottom: 30px;
     left: 40px;
@@ -63,20 +63,20 @@ html, body {
     border-radius: 14px;
 }
 
-.hero-title {
+.game-hero-title {
     font-size: 40px;
     font-weight: 700;
-    color: white;
+    color: black;
 }
 
-.hero-subtitle {
+.game-hero-subtitle {
     font-size: 18px;
     margin-top: 4px;
-    color: white;
+    color: black;
     opacity: 0.9;
 }
 
-.hero-rating {
+.game-hero-rating {
     margin-top: 10px;
     font-size: 26px;
     font-weight: 700;
@@ -302,6 +302,6 @@ footer .footer-title {
 }
 
 @media (max-width: 768px) {
-    .hero-title { font-size: 24px; }
-    .hero-subtitle { font-size: 16px; }
+    .game-hero-title { font-size: 24px; }
+    .game-hero-subtitle { font-size: 16px; }
 }

@@ -73,14 +73,14 @@ export default function GameProfile() {
                 <div className="card-body">
                     <div className="game-hero">
                         <img
-                            className="hero-image"
+                            className="game-hero-image"
                             src={game.images?.[0] ?? "/placeholder.jpg"}
                             alt={game.name}
                         />
-                        <div className="hero-overlay">
-                            <h1 className="hero-title">{game.name}</h1>
-                            <p className="hero-subtitle">{game.short_description}</p>
-                            <div className="hero-rating">
+                        <div className="-game-hero-overlay">
+                            <h1 className="game-hero-title">{game.name}</h1>
+                            <p className="game-hero-subtitle">{game.short_description}</p>
+                            <div className="game-hero-rating">
                                 ⭐ {game.average_rating ?? "No Rating"}
                             </div>
                         </div>
