@@ -121,6 +121,28 @@ const CallToActionSection = () => (
   </section>
 );
 
+const ContactSection = () => (
+  <section className="landing-contact-section">
+    <div className="contact-container">
+      <h2 className="section-title">Contact Us</h2>
+      <div className="contact-details">
+        <div className="contact-item">
+          <strong>Email:</strong> <a href="mailto:info@accessplay.co.uk">info@accessplay.co.uk</a>
+        </div>
+        <div className="contact-item">
+          <strong>Phone:</strong> <a href="tel:+442012345678">+44 20 1234 5678</a>
+        </div>
+        <div className="contact-item">
+          <strong>Hours:</strong> Mon–Fri, 9am–5pm (UK time)
+        </div>
+      </div>
+      <div style={{marginTop: '2rem'}}>
+        <a href="/contact" className="cta-btn" style={{textDecoration: 'none', fontWeight: 600}}>Go to Contact Page</a>
+      </div>
+    </div>
+  </section>
+);
+
 const Footer = () => (
   <footer className="landing-footer">
     <div className="footer-title">AccessPlay - Discover Accessible Mobile Games</div>
@@ -193,6 +215,7 @@ export default function LandingPage() {
         <WhyAccessPlaySection />
         <AccessibilityFeaturesSection />
         <CallToActionSection />
+        <ContactSection />
       </main>
       <Footer />
       <MicrophoneButton onResult={handleVoiceCommand} />
