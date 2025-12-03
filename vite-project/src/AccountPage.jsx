@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getToken, logout } from "./authUtils";
 import { getFavouriteGames, toggleFavouriteGame } from "./favouritesUtils";
 import "./account.css";
+import { Link } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
@@ -10,6 +11,7 @@ export default function AccountPage() {
     const [user, setUser] = useState(null);
     const [error, setError] = useState("");
     const [favourites, setFavourites] = useState([]);
+    const [gameLookup, setGameLookup] = useState({});
 
     // Change password
     const [currentPassword, setCurrentPassword] = useState("");
@@ -67,6 +69,32 @@ export default function AccountPage() {
 
         fetchMe();
     }, []);
+
+    useEffect(() => {
+        async function fetchGames() {
+            try {
+                const res = await fetch(`${API_URL}/api/games`);
+                const data = await res.json();
+
+                // data might be an array or { games: [...] }
+                const list = Array.isArray(data) ? data : (data.games || []);
+
+                const lookup = {};
+                list.forEach((g) => {
+                    if (g.name && g.game_id != null) {
+                        lookup[g.name] = g.game_id;
+                    }
+                });
+
+                setGameLookup(lookup);
+            } catch (err) {
+                console.error("Error loading games for favourites:", err);
+            }
+        }
+
+        fetchGames();
+    }, []);
+
 
     async function handleChangePassword(e) {
         e.preventDefault();
@@ -322,19 +350,31 @@ export default function AccountPage() {
                         <p>You haven’t favourited any games yet. Go to Browse Games to add some.</p>
                     ) : (
                         <ul>
-                            {favourites.map((name) => (
-                                <li key={name} className="favourite-item">
-                                    <span>{name}</span>
-                                    <button
-                                        type="button"
-                                        className="remove-favourite-button"
-                                        onClick={() => handleRemoveFavourite(name)}
-                                    >
-                                        Remove
-                                    </button>
-                                </li>
-                            ))}
+                            {favourites.map((name) => {
+                                const gameId = gameLookup[name];
+
+                                return (
+                                    <li key={name} className="favourite-item">
+                                        {gameId ? (
+                                            <Link to={`/games/${gameId}`} className="favourite-link">
+                                                {name}
+                                            </Link>
+                                        ) : (
+                                            <span>{name}</span>
+                                        )}
+
+                                        <button
+                                            type="button"
+                                            className="remove-favourite-button"
+                                            onClick={() => handleRemoveFavourite(name)}
+                                        >
+                                            Remove
+                                        </button>
+                                    </li>
+                                );
+                            })}
                         </ul>
+
 
                     )}
                 </div>

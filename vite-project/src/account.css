@@ -209,3 +209,14 @@
     padding-left: 1.2rem;
 }
 
+.favourite-link {
+    text-decoration: none;
+    color: #2563eb;           /* nice blue */
+    font-weight: 500;
+}
+
+.favourite-link:hover {
+    text-decoration: underline;
+}
+
+
