@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './LoginPage.css'; // Import CSS file
+import { setAuthSession } from '../../authUtils';
 
 // === BACKEND CONFIG ================================
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
@@ -45,15 +46,18 @@ const LoginPage = () => {
                 throw new Error(data?.error || 'Login failed');
             }
 
-            // Success — save token for future authenticated requests
-            localStorage.setItem('authToken', data.token);
-            localStorage.setItem('userEmail', data.user.email);
+            // Success  save token for future authenticated requests
+            setAuthSession(data.token, data.user);
 
             setMessage('Login successful! Redirecting...');
             console.log('[Login] success:', data);
 
-            // Redirect to home/dashboard
-            window.location.href = '/';
+            // Redirect: admins go to /admin, others to home
+            if (data.user?.is_admin) {
+                window.location.href = '/admin';
+            } else {
+                window.location.href = '/';
+            }
         } catch (err) {
             console.error('[Login] error:', err);
             setMessage(err.message || 'Login failed');
@@ -105,14 +109,15 @@ const LoginPage = () => {
                             />
                         </div>
 
-                        <button type="submit" className="login-button">
-                            Login
+                        <button type="submit" className="login-button" disabled={loading}>
+                            {loading ? 'Logging in...' : 'Login'}
                         </button>
                     </form>
                     {/*Link to register page*/}
                     <p className="register-link-container">
                         Don't have an account? <a href="/register" className="register-link">Register here</a>
                     </p>
+                    {message && <p className="login-message">{message}</p>}
                 </div>
             </div>
         </div>

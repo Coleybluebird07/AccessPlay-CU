@@ -7,7 +7,7 @@ body, html { /* Global body and html styles */
   }
 
   .landing-hero {
-    background: #f5f8ff;
+    background: #4f46e5;
     color: #222;
     padding: 80px 16px 60px 16px;
     text-align: center;
@@ -218,7 +218,7 @@ body, html { /* Global body and html styles */
   .mic-fab {
     /* Fixed positioning ensures it stays in place when scrolling */
     position: fixed;
-    right: 2rem;
+    right: 0.5rem; /* Move closer to the right border */
     bottom: 2rem;
     z-index: 1000; /* Ensure it stays above most content */
     background: transparent;

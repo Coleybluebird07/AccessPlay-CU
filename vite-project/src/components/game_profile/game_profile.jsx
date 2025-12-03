@@ -94,7 +94,7 @@ export default function GameProfile() {
                 <div className="card-body">
                     <div className="game-hero">
                         <img
-                            className="hero-image"
+                            className="game-hero-image"
                             src={game.images?.[0] ?? "/placeholder.jpg"}
                             alt={game.name}
                         />
@@ -113,11 +113,11 @@ export default function GameProfile() {
                                 >
                                     {isFavourite ? "♥" : "♡"}
                                 </button>
-
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 {/* Main Content */}
                 <div className="profile-content">

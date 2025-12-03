@@ -15,10 +15,11 @@ export function authMiddleware(req, res, next) {
         const secret = process.env.JWT_SECRET || "dev_secret";
         const decoded = jwt.verify(token, secret);
 
-        // Normalise to get id + email
+        // Normalise to get id + email + is_admin
         req.user = {
             id: decoded.sub || decoded.id,
             email: decoded.email,
+            is_admin: !!decoded.is_admin,
         };
 
         return next();
@@ -28,4 +29,11 @@ export function authMiddleware(req, res, next) {
             .status(401)
             .json({ ok: false, error: "Invalid or expired token" });
     }
+}
+
+export function requireAdmin(req, res, next) {
+    if (!req.user || !req.user.is_admin) {
+        return res.status(403).json({ ok: false, error: "Admin access required" });
+    }
+    return next();
 }

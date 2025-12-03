@@ -1,32 +1,49 @@
-# Minimal Auth Server (Express + MariaDB)
+# AccessPlay — Backend (Minimal Auth Server)
 
-Tiny REST API for authentication and basic game/review data used by the AccessPlay frontend.
+This folder contains the backend for AccessPlay: a minimal authentication and game data API built using **Node.js, Express, and MariaDB**.
 
-## Quick links
-- Source: `src/`
-- DB schema: `schema.sql`
+---
+
+## Quick Links
+- Main source: `src/`
+- Database schema: `schema.sql`
 - Sample data: `data.sql`
 - Tests: `test/`
-- Env example: `.env.example`
+- Environment example: `.env.example`
+
+---
 
 ## Features
-- Register & login (`/api/auth/register`, `/api/auth/login`)
-- Password hashing with `bcrypt` (12 rounds)
+- User registration (`/api/auth/register`)
+- User login (`/api/auth/login`)
+- Password hashing using **bcrypt**
 - JWT authentication
-- Input validation with `Joi`
+- Input validation using **Joi**
 - MariaDB connection pooling
-- Basic game, genre and review endpoints
-- CORS support for Vite frontend
+- Basic endpoints for:
+  - games  
+  - reviews  
+  - genres  
+  - game features  
+- CORS support for the Vite frontend
+
+---
 
 ## Requirements
-- Node.js (v14+ recommended)
-- npm
+- Node.js 16+
 - MariaDB (local or Docker)
+- npm
 - Git
-- Optional: Docker, Postman
 
-## Environment (\`.env\`)
-Copy `.​env.example` → `.​env` and fill values:
+Optional:
+- Docker Desktop
+- Postman / API client
+
+---
+
+## Environment Variables
+
+Copy `.env.example` → `.env`:
 
 Required keys:
 - `DB_HOST`
@@ -39,22 +56,22 @@ Required keys:
 - `PORT` (optional)
 - `CORS_ORIGIN` (e.g. `http://localhost:5173`)
 
-Configure environment (examples):
+Configure environment variables:
 - macOS / Linux / Git Bash:
   ```bash
-  cp .env.example .env
+  NODE_ENV=production npm start
   ```
 - Windows Command Prompt:
   ```bat
-  copy .env.example .env
+  set NODE_ENV=production && npm start
   ```
 - PowerShell:
   ```powershell
-  Copy-Item .env.example .env
+  $env:NODE_ENV='production'; npm start
   ```
 
 ## Setup
-1. Install:
+1. Install dependencies:
    ```bash
    npm install
    ```
@@ -151,4 +168,4 @@ Set `CORS_ORIGIN` in `.env` to your frontend URL (e.g. `http://localhost:5173`).
 - Update `test-db.js` for automated test DB setup
 
 ## License
-MIT License. See `LICENSE` file for details.
+None (for educational use only)
