@@ -179,13 +179,11 @@ export default function Browse_games() {
                                         <span className="game-rating">⭐ {game.average_rating ?? "No Rating"}</span>
                                         <button
                                             type="button"
-                                            className={`favourite-button ${
-                                                isFavourite(game.name) ? "heart-active" : "heart-inactive"
-                                            }`}
+                                            className={`game-pill heart-pill ${isFavourite(game.name) ? "active" : ""}`}
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 e.stopPropagation();
-                                                handleToggleFavourite(game.name); // ✅ use game.name
+                                                handleToggleFavourite(game.name);
                                             }}
                                         >
                                             {isFavourite(game.name) ? "♥" : "♡"}

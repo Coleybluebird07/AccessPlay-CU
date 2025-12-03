@@ -108,13 +108,12 @@ export default function GameProfile() {
 
                                 <button
                                     type="button"
-                                    className={`favourite-button ${
-                                        isFavourite ? "heart-active" : "heart-inactive"
-                                    }`}
+                                    className={`game-pill heart-pill ${isFavourite ? "active" : ""}`}
                                     onClick={handleToggleFavourite}
                                 >
                                     {isFavourite ? "♥" : "♡"}
                                 </button>
+
                             </div>
                         </div>
                     </div>

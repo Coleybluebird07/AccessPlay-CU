@@ -282,33 +282,52 @@ footer .footer-note {
     margin-bottom: 8px;
 }
 
-/* Base pill shape */
-.favourite-button {
-    margin-left: 0.25rem;
-    padding: 0.25rem 0.55rem;
-    border-radius: 999px;
-    border: none;
-    display: flex;
+/* Shared pill badge style */
+.game-pill {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    padding: 6px 10px;
+    border-radius: 12px;
+    background: #fff4f4;      /* soft colour */
+    font-size: 18px;
+    min-width: 36px;
+    min-height: 36px;
     cursor: pointer;
-    line-height: 1;
-    background: #f9fafb;
+    border: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
 }
 
-/* Grey heart when inactive */
-.favourite-button.heart-inactive {
-    color: #9ca3af;
+/* Red heart style */
+.game-pill.heart-pill {
+    background: #ffe6e6;
+    color: #c1121f;
+    font-weight: bold;
+    margin-left: 0.1rem;
+}
+
+.game-pill.heart-pill.active {
+    background: #c1121f;
+    color: white;
+    box-shadow: 0 0 6px rgba(193, 18, 31, 0.5);
 }
 
 
-.favourite-button.heart-active {
-    background: #fee2e2;
-    color: #b91c1c;
-}
-
-
-.favourite-button:hover {
+/* Hover behaviour */
+.game-pill:hover {
     transform: scale(1.05);
 }
+
+/* Pulse animation for favouriting */
+@keyframes heartPulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+
+/* Apply pulse when toggled */
+.game-pill.heart-pill.pulse {
+    animation: heartPulse 0.25s ease-in-out;
+}
+
+
