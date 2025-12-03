@@ -1,36 +1,57 @@
-# Group 7
+# Group 7 — AccessPlay
 
-AccessPlay is a full-stack application project developed by Group 7 for Cardiff University's Software Engineering course
-using:
-- A React + Vite frontend (in `vite-project/`)
-- A Node.js + Express authentication and game data API (in `auth-server/`)
-- A MariaDB database for persistent storage
-The platform allows users to browse mobile games, filter by accessibility features, read details, accessibility support 
-and write reviews.
-it includes user registration, login, JWT authentication, and secure password handling.
+AccessPlay is a full-stack accessibility-focused mobile game discovery platform developed by Group 7 as part of
+Cardiff University’s Software Engineering course.
 
+The system is composed of:
+- **A React + Vite frontend** (`vite-project/`)
+- **A Node.js + Express backend** (`auth-server/`)
+- **A MariaDB relational database**
 
-## Getting started
-This project consists of two applications:
+The platform enables users to:
+- Browse mobile games
+- Filter based on accessibility features
+- View full game accessibility details
+- Register, log in, and authenticate with JWT
+- Submit and read reviews
+- Use voice navigation for improved accessibility
 
-- `vite-project/` — Frontend application built with Vite and React.
-- `auth-server/` — Backend API server built with Node.js and Express.
+---
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## Project Structure
 
 ```
+group-7/
+├── auth-server/         # Backend API server (Node.js + Express)
+├── vite-project/        # Frontend application (Vite + React)
+└── README.md            # Project README (this file)
+```
+
+
+---
+
+## Getting Started
+
+This repository contains **two separate applications**:
+
+| Folder          | Description               |
+|-----------------|---------------------------|
+| `vite-project/` | React + Vite frontend     |
+| `auth-server/`  | Express + MariaDB backend |
+
+Both must be installed and run independently.
+
+---
+
+# Development Workflow (GitLab)
+
+### Add your files / upload project
+```bash
 cd existing_repo
 git remote add origin https://git.cardiff.ac.uk/c23044539/group-7.git
 git branch -M main
 git push -uf origin main
 ```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://git.cardiff.ac.uk/c23044539/group-7/-/settings/integrations)
 
 
 ## Collaborate with your team
@@ -44,61 +65,141 @@ Workflow features help your team collaborate effectively.
 - [ ] [Manage issues](https://docs.gitlab.com/ee/user/project/issues/)
 - [ ] [Merge into Main](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
+Recommended GitLab Features:
+- Issue tracking
+- Merge requests with code reviews
+- CI/CD pipelines
+- Code scanning / linting
 
-## Test and Deploy
+## Test and Deployment
 
 Use the built-in continuous integration in GitLab.
 
-- vitest for frontend testing
-- Supertest for backend testing
-- Manual MariaDB testing for database operations
+- Frontend Testing with Vitest (React components).
+- Backend Testing with Supertest (API endpoints), and Vitest(service-level tests).
+- Manual MariaDB testing with sample data and SQL schema included.
+
+You can set up CI/CD pipelines to automate testing and deployment.
+- Linting
+- Building
+- Testing
+- Deployment
 
 ***
 
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+# Project Documentation
 
 ## Name
-Choose a self-explaining name for your project.
+AccessPlay - An accessible mobile game discovery platform
+
+---
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+AccessPlay is a web platform that helps users discover games based on their 
+- Accessibility features
+- User reviews
+- Genres
+- Platform compatibility (iOS, Android)
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Core features
+- JWT-based user authentication
+- Game browsing with filter and search
+- Full game details with accessibility information
+- User reviews and ratings
+- Voice-controlled navigation
+- Responsive UI design for mobile and desktop
+
+### Tech stack
+- Frontend: React, Vite, React Router
+- Backend: Node.js, Express
+- Database: MariaDB
+- Testing: Vitest, Supertest
 
 ## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Screenshots and mockups can be found in the `docs/` folder (if applicable).
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+1. Clone the repository:
+   ```bash
+   git clone https://git.cardiff.ac.uk/c23044539/group-7.git
+   cd group-7
+   ```
+2. Setup Database:
+    MariaDB (Local or Remote)
+   - Create a database and run the provided `schema.sql` to set up tables.
+   - (Optional) Load sample data with `data.sql`.
+   - Update database connection settings in `auth-server/.env`.
 
+---
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### Backend (auth-server)
+1. Navigate to the backend directory:
+   ```bash
+   cd auth-server
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the server:
+   ```bash
+   npm run dev
+   ```
+
+### Frontend (vite-project)
+1. Open a new terminal and navigate to the frontend directory:
+   ```bash
+   cd vite-project
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open your browser and navigate to `http://localhost:5173` to access the application.
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+For support:
+- Open an issue on GitLab
+- Contact the maintainers
+- Speak to the module coordinator
 
 ## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Planned Improvements and features for future releases.
+- Enhanced accessibility features
+- More comprehensive game database
+- Improved UI/UX design
+- Mobile app version
+- Social features (friends, sharing)
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+Guidelines for contributing.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+- Fork the repository
+- Create a feature branch (e.g., `feature/my-feature`)
+- Commit your changes with clear messages (e.g., `git commit -m "Add feature X"`)
+- Make your changes
+- Write tests for your changes
+- Submit a merge request
+- Use eslint for formatting and linting (``` npm run lint ```)
 
 ## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Group 7 Members-Cardiff University Software Engineering Course
+- 1846727 
+- 22033692
+- 22059852
+- 23044539
+- 23037459
+
+Special thanks to our module coordinator and teaching assistants for their support and guidance.
 
 ## License
-For open source projects, say how it is licensed.
+None (for educational use only)
 
 ## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Active development: Ongoing as part of Cardiff University's Software Engineering course.
+- Last updated: December 2025
+- Current version: 1.0.0

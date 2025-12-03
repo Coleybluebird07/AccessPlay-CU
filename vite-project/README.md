@@ -1,70 +1,78 @@
 # AccessPlay — Frontend (Vite + React)
 
-Minimal, production-ready frontend for AccessPlay built with Vite, React and React Router.
+This is the frontend for **AccessPlay**, built using **Vite**, **React**, and **React Router**.  
+It communicates with the backend API for authentication, games, and user reviews.
 
 ---
 
-## Table of contents
-- [Overview](#overview)
-- [Features](#features)
-- [Tech stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Quick start (Windows)](#quick-start-windows)
-- [Environment variables](#environment-variables)
-- [Available scripts](#available-scripts)
-- [Project structure](#project-structure)
-- [API usage example](#api-usage-example)
-- [Routing overview](#routing-overview)
-- [Testing & linting](#testing--linting)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Overview
-A single-page React application scaffolded with Vite to provide fast HMR during development and optimized production builds. Designed to consume an authentication/game API via `VITE_API_URL`.
+
+This project provides:
+- Fast React development using Vite HMR
+- Modern SPA routing with React Router
+- API integration via `VITE_API_URL`
+- Voice navigation (SpeechRecognition)
+- Full game browsing and review experience
+- Vitest support for unit tests
+
+---
 
 ## Features
-- Fast development with Vite HMR
-- React + React Router for SPA routing
-- Unit tests with Vitest
-- ESLint rules and conventions
-- Simple environment-based API configuration
 
-## Tech stack
-- `vite`
-- `react`, `react-dom`
-- `react-router-dom`
-- `vitest`
-- `eslint`
-- Vanilla CSS
+- Fast HMR via Vite  
+- SPA architecture  
+- Modular React component structure  
+- Unit tests via Vitest  
+- ESLint for code quality  
+- Environment-based backend configuration  
+
+---
+
+## Tech Stack
+
+| Category   | Tools        |
+|------------|--------------|
+| Build Tool | Vite         |
+| Framework  | React        |
+| Routing    | React Router |
+| Testing    | Vitest       |
+| Linting    | ESLint       |
+| Styling    | CSS          |
+
+---
 
 ## Prerequisites
-- Node.js: Recommended `>= 20` (Vite 7+)
-- npm: `v8+`
-- OS: Windows / macOS / Linux
-- Backend server accessible (see repository `../auth-server`)
+
+- Node.js (>= 18 recommended, >= 20 ideal)
+- npm
+- Backend API running on `localhost:4000`
+
+---
 
 ## Quick start (Windows)
 1. Install dependencies:
    ```powershell
    npm install
    ```
-2. Set `VITE_API_URL` (temporary PowerShell session) and start dev server:
+2. Create a `.`env` file at project root:
+   ```ini
+   VITE_API_URL=http://localhost:4000
+   ``` 
+   or set `VITE_API_URL` (temporary PowerShell session) and start dev server:
    ```powershell
    $env:VITE_API_URL="http://localhost:4000"; npm run dev
    ```
-   Or create a `.`env` file at project root:
-   ```ini
-   VITE_API_URL=http://localhost:4000
+   
+3. Start development server:
+   ```powershell
+   npm run dev
    ```
-3. Open the app:
-    - Development: `http://localhost:5173`
-4. Build / preview:
+   Open `http://localhost:5173` in your browser.
+
+4. To build for production:
    ```powershell
    npm run build
-   npm run preview
    ```
-
 ## Environment variables
 - Vite only exposes variables prefixed with `VITE_`.
 - Recommended variable: `VITE_API_URL`
@@ -136,6 +144,7 @@ vite-project/
   ```powershell
   npm run lint
   ```
+Test location: `src/tests/`
 
 ## Troubleshooting
 - If `import.meta.env` is `undefined`, ensure dev server is running and variable name is prefixed with `VITE_`.
@@ -149,4 +158,4 @@ vite-project/
 - Open PRs against the main branch with a clear description and related issue reference.
 
 ## License
-This project is licensed under the MIT License
+None (for educational use only)
