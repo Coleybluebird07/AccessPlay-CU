@@ -88,8 +88,6 @@ This project provides:
 - `npm run test` — run Vitest (`--environment jsdom`)
 - `npm run lint` — run ESLint
 
-Key files: `package.json`, `vite.config.js`, `index.html`
-
 ## Project structure
 ```
 vite-project/
