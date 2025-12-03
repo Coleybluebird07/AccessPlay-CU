@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(255) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  -- admin flag: 1 = admin, 0 = normal user
+  is_admin TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   INDEX (email)
 );
@@ -117,3 +119,4 @@ CREATE TRIGGER IF NOT EXISTS update_avg_rating_after_update
         WHERE game_id = NEW.game_id
     )
     WHERE game_id = NEW.game_id;
+

