@@ -282,31 +282,33 @@ footer .footer-note {
     margin-bottom: 8px;
 }
 
+/* Base pill shape */
 .favourite-button {
-    margin-left: auto;
-    padding: 0.2rem 0.5rem;
+    margin-left: 0.25rem;
+    padding: 0.25rem 0.55rem;
     border-radius: 999px;
     border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
     line-height: 1;
+    background: #f9fafb;
 }
 
-/* Grey heart when not favourited */
+/* Grey heart when inactive */
 .favourite-button.heart-inactive {
     color: #9ca3af;
 }
 
-/* Red heart when favourited */
+
 .favourite-button.heart-active {
-    color: #e11d48;
+    background: #fee2e2;
+    color: #b91c1c;
 }
+
 
 .favourite-button:hover {
     transform: scale(1.05);
 }
-

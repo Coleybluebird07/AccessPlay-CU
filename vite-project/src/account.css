@@ -1,17 +1,19 @@
 .page-container {
     display: flex;
     justify-content: center;
-    padding: 2rem 1rem 3rem;
+    padding: 2rem 0;
+    background: #f5f5f5;
 }
 
 /* Main card */
 .account-card {
     width: 100%;
-    max-width: 960px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
 }
 
 .account-card h1 {
@@ -20,15 +22,60 @@
     font-size: 1.9rem;
 }
 
-/* Layout wrapper:
-   - 1 column on small screens
-   - 2 columns on larger screens
-*/
+
 .account-layout {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
+    grid-template-columns: 1.1fr 1.3fr;   /* ✅ two nice columns */
+    gap: 2rem;
+    align-items: flex-start;
 }
+
+.account-favourites {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.account-favourites h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.account-favourites ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.favourite-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 0.5rem;
+    border-radius: 999px;
+    background: #f3f4f6;   /* light grey pill */
+}
+
+.favourite-item span {
+    font-size: 0.95rem;
+}
+
+/* ✅ nicer coloured "Remove" pill button */
+.remove-favourite-button {
+    border: none;
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.85rem;
+    background: #fee2e2;   /* light red */
+    color: #b91c1c;
+    cursor: pointer;
+}
+
+.remove-favourite-button:hover {
+    background: #fecaca;
+}
+
 
 /* Two-column layout from ~900px upwards */
 @media (min-width: 900px) {
