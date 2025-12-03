@@ -72,6 +72,103 @@ html, body {
     font-size: 0.9rem;
 }
 
+
+/* BACKDROP */
+.filter-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 90;
+    display: none;
+}
+
+
+/* SHOW BACKDROP */
+.filter-backdrop.visible {
+    display: block;
+}
+
+
+/* FLOATING FILTER PANEL */
+.filters {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+
+
+    /* Floating panel style */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 350px;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    z-index: 99;
+
+
+    /* Hidden by default */
+    display: none;
+
+
+    transition: all 0.25s ease;
+}
+
+
+/* When visible (mobile) */
+.filters.visible {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* Close button */
+.filters .close-filters {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 22px;
+    float: right;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+
+/* Desktop view: normal sidebar */
+@media (min-width: 769px) {
+    .filters {
+        position: static;
+        transform: none;
+        opacity: 1;
+        display: block;
+        width: 250px;
+    }
+    .filter-backdrop {
+        display: none !important;
+    }
+    .filters .close-filters {
+        display: none;
+    }
+    .mobile-filter-btn {
+        display: none;
+    }
+}
+
+
+/* Mobile view */
+@media (max-width: 768px) {
+    .mobile-filter-btn {
+        display: block;
+        width: 100%;
+    }
+    .filters .close-filters {
+        display: block;
+    }
+}
+
+
 .separator {
     border-top: 1px solid #dddddd;
     margin: 1rem 0;
