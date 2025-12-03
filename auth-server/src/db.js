@@ -1,7 +1,7 @@
 import mariadb from "mariadb";
 import dotenv from "dotenv";
 import path from "path";
-dotenv.config({ path: path.resolve(process.cwd(), "../.env") });
+dotenv.config();
 
 export const pool = mariadb.createPool({
   host: process.env.DB_HOST || "localhost",

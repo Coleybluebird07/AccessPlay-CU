@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React , { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./browse_game.css";
+import {getFavouriteGames, toggleFavouriteGame} from "../../favouritesUtils";
 
 export default function Browse_games() {
     const [games, setGames] = useState([]);
+    const [favourites, setFavourites] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchText, setSearchText] = useState("");
     const [selectedGenres, setSelectedGenres] = useState([]);
@@ -11,6 +13,12 @@ export default function Browse_games() {
 
     // FIXED STATE NAME
     const [showFilters, setShowFilters] = useState(false);
+
+    useEffect(() => {
+        // Load favourites from localStorage when the page loads
+        setFavourites(getFavouriteGames());
+    }, []);
+
 
     useEffect(() => {
         fetch("http://localhost:4000/api/games")
@@ -57,6 +65,15 @@ export default function Browse_games() {
             .then(setGames)
             .catch(() => setGames([]));
     }, [searchText, selectedGenres, selectedFeatures]);
+
+    function handleToggleFavourite(name) {
+        const updated = toggleFavouriteGame(name);
+        setFavourites(updated);
+    }
+
+    function isFavourite(name) {
+        return favourites.includes(name);
+    }
 
     return (
         <div>
@@ -160,6 +177,18 @@ export default function Browse_games() {
                                         <span>{game.genres?.join(", ") ?? "No genres"}</span>
                                         <span>{game.platform}</span>
                                         <span className="game-rating">⭐ {game.average_rating ?? "No Rating"}</span>
+                                        <button
+                                            type="button"
+                                            className={`game-pill heart-pill ${isFavourite(game.name) ? "active" : ""}`}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                handleToggleFavourite(game.name);
+                                            }}
+                                        >
+                                            {isFavourite(game.name) ? "♥" : "♡"}
+                                        </button>
+
                                     </div>
                                 </Link>
                             ))

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+<<<<<<< HEAD
+    <file url="file://$PROJECT_DIR$/auth-server/data.sql" dialect="GenericSQL" />
+=======
     <file url="file://$PROJECT_DIR$/auth-server/src/admin.js" dialect="MariaDB" />
+>>>>>>> 719c7c80ff2d6ea138f24f35a16fc7a52c4822cd
   </component>
 </project>

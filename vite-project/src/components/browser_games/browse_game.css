@@ -377,4 +377,54 @@ footer .footer-title {
 
 footer .footer-note {
     margin-bottom: 8px;
+<<<<<<< HEAD
 }
+
+/* Shared pill badge style */
+.game-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 12px;
+    background: #fff4f4;      /* soft colour */
+    font-size: 18px;
+    min-width: 36px;
+    min-height: 36px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Red heart style */
+.game-pill.heart-pill {
+    background: #ffe6e6;
+    color: #c1121f;
+    font-weight: bold;
+    margin-left: 0.1rem;
+}
+
+.game-pill.heart-pill.active {
+    background: #c1121f;
+    color: white;
+    box-shadow: 0 0 6px rgba(193, 18, 31, 0.5);
+}
+
+
+/* Hover behaviour */
+.game-pill:hover {
+    transform: scale(1.05);
+}
+
+/* Pulse animation for favouriting */
+@keyframes heartPulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+
+/* Apply pulse when toggled */
+.game-pill.heart-pill.pulse {
+    animation: heartPulse 0.25s ease-in-out;
+}
+
