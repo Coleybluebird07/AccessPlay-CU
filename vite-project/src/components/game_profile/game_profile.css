@@ -76,6 +76,12 @@ html, body {
     opacity: 0.9;
 }
 
+.hero-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .hero-rating {
     margin-top: 10px;
     font-size: 26px;

@@ -2,6 +2,8 @@ import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "./game_profile.css";
 import { isLoggedIn } from "../../authUtils.js";
+import { getFavouriteGames, toggleFavouriteGame } from "../../favouritesUtils";
+import "../browser_games/browse_game.css";
 
 export default function GameProfile() {
     const { id } = useParams();
@@ -9,14 +11,26 @@ export default function GameProfile() {
     const [reviews, setReviews] = useState([]);
     const [userRating, setUserRating] = useState(0);
     const [userComment, setUserComment] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [isFavourite, setIsFavourite] = useState(false);
 
-    // Fetch game details
+
     useEffect(() => {
         fetch(`http://localhost:4000/api/games/${id}`)
             .then(res => res.json())
-            .then(data => setGame(data))
+            .then(data => {
+                setGame(data);
+
+                const favs = getFavouriteGames();
+                if (data?.name && favs.includes(data.name)) {
+                    setIsFavourite(true);
+                } else {
+                    setIsFavourite(false);
+                }
+            })
             .catch(err => console.error(err));
     }, [id]);
+
 
     // Fetch game reviews
     useEffect(() => {
@@ -26,7 +40,14 @@ export default function GameProfile() {
             .catch(err => console.error(err));
     }, [id]);
 
-    // Submit review
+
+    function handleToggleFavourite() {
+        if (!game?.name) return;
+        const updated = toggleFavouriteGame(game.name);
+        setIsFavourite(updated.includes(game.name));
+    }
+
+// Submit review
     function handleSubmitReview() {
         if (!userRating || !userComment.trim()) {
             alert("Please provide both a rating and a review.");
@@ -80,20 +101,30 @@ export default function GameProfile() {
                         <div className="hero-overlay">
                             <h1 className="hero-title">{game.name}</h1>
                             <p className="hero-subtitle">{game.short_description}</p>
-                            <div className="hero-rating">
-                                ⭐ {game.average_rating ?? "No Rating"}
+                            <div className="hero-rating-row">
+                                <div className="hero-rating">
+                                    ⭐ {game.average_rating ?? "No Rating"}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    className={`favourite-button ${
+                                        isFavourite ? "heart-active" : "heart-inactive"
+                                    }`}
+                                    onClick={handleToggleFavourite}
+                                >
+                                    {isFavourite ? "♥" : "♡"}
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-
-            {/* Main Content */}
-            <div className="profile-content">
-                <div className="left-column">
-                    <div className="card">
-                        <div className="card-body">
+                {/* Main Content */}
+                <div className="profile-content">
+                    <div className="left-column">
+                        <div className="card">
+                            <div className="card-body">
                             <h2 className="h5">About This Game</h2>
                             <p>{game.detailed_description}</p>
 
@@ -185,6 +216,7 @@ export default function GameProfile() {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <footer>
                 <div className="footer-title">AccessPlay - Discover Accessible Mobile Games</div>
