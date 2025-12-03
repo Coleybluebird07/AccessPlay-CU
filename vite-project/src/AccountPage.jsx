@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getToken, logout } from "./authUtils";
-import { getFavouriteGames } from "./favouritesUtils";
+import { getFavouriteGames, toggleFavouriteGame } from "./favouritesUtils";
 import "./account.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
@@ -117,6 +117,12 @@ export default function AccountPage() {
             setPasswordLoading(false);
         }
     }
+
+    function handleRemoveFavourite(name) {
+        const updated = toggleFavouriteGame(name);  // this will remove it if it exists
+        setFavourites(updated);
+    }
+
 
     async function handleChangeEmail(e) {
         e.preventDefault();
@@ -317,9 +323,19 @@ export default function AccountPage() {
                     ) : (
                         <ul>
                             {favourites.map((name) => (
-                                <li key={name}>{name}</li>
+                                <li key={name} className="favourite-item">
+                                    <span>{name}</span>
+                                    <button
+                                        type="button"
+                                        className="remove-favourite-button"
+                                        onClick={() => handleRemoveFavourite(name)}
+                                    >
+                                        Remove
+                                    </button>
+                                </li>
                             ))}
                         </ul>
+
                     )}
                 </div>
 

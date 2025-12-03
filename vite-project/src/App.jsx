@@ -70,6 +70,7 @@ export default function App() {
           <Route path="/browse-games" element={<Browse_games />} />
           <Route path="/games/:id" element={<GameProfile />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/account" element={<AccountPage />} />
           {/* Optional: 404 route */}
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
