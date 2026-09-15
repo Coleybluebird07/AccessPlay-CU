@@ -1,205 +1,134 @@
-# Group 7 — AccessPlay
+# AccessPlay
 
-AccessPlay is a full-stack accessibility-focused mobile game discovery platform developed by Group 7 as part of
-Cardiff University’s Software Engineering course.
+A web application that helps people discover mobile games by accessibility features, genre and platform.
 
-The system is composed of:
-- **A React + Vite frontend** (`vite-project/`)
-- **A Node.js + Express backend** (`auth-server/`)
-- **A MariaDB relational database**
+Built as a Cardiff University group software engineering project. Users can browse games, read accessibility information and reviews, and save titles to revisit later. This repository is a portfolio copy of the university project.
 
-The platform enables users to:
-- Browse mobile games
-- Filter based on accessibility features
-- View full game accessibility details
-- Register, log in, and authenticate with JWT
-- Submit and read reviews
-- Use voice navigation for improved accessibility
+## My contribution
 
----
+I am David Cole. My work included:
 
-## Project Structure
+- Developing MariaDB-backed registration, login, account management and game retrieval.
+- Implementing favourites across the browse, game-profile and account pages, including adding and removing games and opening saved games from the account page.
+- Refining the favourites interface and writing tests.
+- Resolving merge conflicts and integrating feature branches into the team's development branch.
 
+The full application was a team effort. The features below describe the project as a whole, rather than work completed solely by me.
+
+## Features
+
+- Search for games and filter by genre and accessibility features.
+- View game details, accessibility information and user reviews.
+- Register, sign in and update account details.
+- Save and remove favourite games.
+- Submit game reviews and ratings.
+- Use voice navigation where supported by the browser.
+
+## Technology
+
+| Area | Tools |
+| --- | --- |
+| Frontend | React, JavaScript, Vite, React Router |
+| Backend | Node.js, Express |
+| Database | MariaDB |
+| Authentication | JSON Web Tokens, bcrypt |
+| Testing | Vitest, React Testing Library, Supertest |
+
+## Project structure
+
+```text
+auth-server/
+  src/             API routes, authentication and database access
+  test/            Backend tests
+  schema.sql       Database and table definitions
+  data.sql         Sample game data
+vite-project/
+  src/             React pages, components and utilities
+  test/            Frontend tests
 ```
-group-7/
-├── auth-server/         # Backend API server (Node.js + Express)
-├── vite-project/        # Frontend application (Vite + React)
-└── README.md            # Project README (this file)
-```
 
+## Run locally
 
----
+You will need Node.js and npm compatible with the versions in the two `package.json` files, and a running MariaDB server. The instructions below describe the checked-in configuration.
 
-## Getting Started
+### 1. Clone the repository
 
-This repository contains **two separate applications**:
-
-| Folder          | Description               |
-|-----------------|---------------------------|
-| `vite-project/` | React + Vite frontend     |
-| `auth-server/`  | Express + MariaDB backend |
-
-Both must be installed and run independently.
-
----
-
-# Development Workflow (GitLab)
-
-### Add your files / upload project
 ```bash
-cd existing_repo
-git remote add origin https://git.cardiff.ac.uk/c23044539/group-7.git
-git branch -M main
-git push -uf origin main
+git clone https://github.com/Coleybluebird07/AccessPlay-CU.git
+cd AccessPlay-CU
 ```
 
+### 2. Prepare the database
 
-## Collaborate with your team
+Using a MariaDB account with permission to create the local database, import `auth-server/schema.sql`, then `auth-server/data.sql`. For example:
 
-Workflow features help your team collaborate effectively.
-- [ ] [Create a new feature branch](https://docs.gitlab.com/ee/user/project/repository/branches/#create-a-branch)
-- [ ] [Commit changes](https://docs.gitlab.com/ee/user/project/repository/commits/#create-a-commit)
-- [ ] [Push changes](https://docs.gitlab.com/ee/user/project/repository/commits/#push-commits-to-gitlab)
-- [ ] [Open a merge request into Development](https://docs.gitlab.com/ee/user/project/merge_requests/#create-a-merge-request)
-- [ ] [Review code](https://docs.gitlab.com/ee/user/project/merge_requests/reviews/)
-- [ ] [Manage issues](https://docs.gitlab.com/ee/user/project/issues/)
-- [ ] [Merge into Main](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+```bash
+mariadb -u YOUR_DATABASE_USER -p < auth-server/schema.sql
+mariadb -u YOUR_DATABASE_USER -p < auth-server/data.sql
+```
 
-Recommended GitLab Features:
-- Issue tracking
-- Merge requests with code reviews
-- CI/CD pipelines
-- Code scanning / linting
+The schema creates a database named `group7_auth`. Import the sample data once into a fresh database.
 
-## Test and Deployment
+### 3. Configure and start the backend
 
-Use the built-in continuous integration in GitLab.
+Create `auth-server/.env` with your local settings. Replace the example values before use and keep the file out of version control.
 
-- Frontend Testing with Vitest (React components).
-- Backend Testing with Supertest (API endpoints), and Vitest(service-level tests).
-- Manual MariaDB testing with sample data and SQL schema included.
+```dotenv
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=your_local_database_user
+DB_PASSWORD=your_local_database_password
+DB_NAME=group7_auth
+PORT=4000
+CORS_ORIGIN=http://localhost:5173
+JWT_SECRET=replace_with_a_long_random_secret
+JWT_EXPIRES_IN=7d
+```
 
-You can set up CI/CD pipelines to automate testing and deployment.
-- Linting
-- Building
-- Testing
-- Deployment
+```bash
+cd auth-server
+npm install
+npm run dev
+```
 
-***
+The API runs at `http://localhost:4000`. Its health endpoint is `http://localhost:4000/health`.
 
-# Project Documentation
+### 4. Start the frontend
 
-## Name
-AccessPlay - An accessible mobile game discovery platform
+In a separate terminal, from the repository root:
 
----
+```bash
+cd vite-project
+npm install
+npm run dev
+```
 
-## Description
-AccessPlay is a web platform that helps users discover games based on their 
-- Accessibility features
-- User reviews
-- Genres
-- Platform compatibility (iOS, Android)
+Open `http://localhost:5173`. Keep the backend on port 4000: some pages use that address directly, while others read `VITE_API_URL`.
 
-### Core features
-- JWT-based user authentication
-- Game browsing with filter and search
-- Full game details with accessibility information
-- User reviews and ratings
-- Voice-controlled navigation
-- Responsive UI design for mobile and desktop
+## Tests and build
 
-### Tech stack
-- Frontend: React, Vite, React Router
-- Backend: Node.js, Express
-- Database: MariaDB
-- Testing: Vitest, Supertest
+Run these commands from the indicated directory:
 
-## Visuals
-Screenshots and mockups can be found in the `docs/` folder (if applicable).
+| Directory | Command | Purpose |
+| --- | --- | --- |
+| `auth-server` | `npm test -- --run` | Run backend tests once |
+| `vite-project` | `npm test -- --run` | Run frontend tests once |
+| `vite-project` | `npm run lint` | Check frontend lint rules |
+| `vite-project` | `npm run build` | Build the frontend |
 
-## Installation
-1. Clone the repository:
-   ```bash
-   git clone https://git.cardiff.ac.uk/c23044539/group-7.git
-   cd group-7
-   ```
-2. Setup Database:
-    MariaDB (Local or Remote)
-   - Create a database and run the provided `schema.sql` to set up tables.
-   - (Optional) Load sample data with `data.sql`.
-   - Update database connection settings in `auth-server/.env`.
+The repository contains tests; this README does not claim that every test currently passes. Some API tests mock database responses, so they do not verify the underlying SQL against a live database.
 
----
-## Usage
-### Backend (auth-server)
-1. Navigate to the backend directory:
-   ```bash
-   cd auth-server
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the server:
-   ```bash
-   npm run dev
-   ```
+## Scope and known limitations
 
-### Frontend (vite-project)
-1. Open a new terminal and navigate to the frontend directory:
-   ```bash
-   cd vite-project
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-4. Open your browser and navigate to `http://localhost:5173` to access the application.
+This is a university demonstration, not a deployed production service.
 
-## Support
-For support:
-- Open an issue on GitLab
-- Contact the maintainers
-- Speak to the module coordinator
+- The authentication code retains a demonstration administrator password override, a fallback JWT secret and login debug logging. These need to be removed before any public deployment or use with real accounts.
+- Favourites are stored in browser local storage. They are not synchronised between devices or stored separately for each account.
+- API base URLs need to be made consistent before deploying outside the local setup.
+- Voice navigation depends on browser support. An accessibility-focused feature set does not establish compliance with an accessibility standard.
 
-## Roadmap
-Planned Improvements and features for future releases.
-- Enhanced accessibility features
-- More comprehensive game database
-- Improved UI/UX design
-- Mobile app version
-- Social features (friends, sharing)
+## Credits
 
-## Contributing
-Guidelines for contributing.
+Developed by Cardiff University Group 7. This portfolio copy highlights my contributions while retaining the team's work.
 
-- Fork the repository
-- Create a feature branch (e.g., `feature/my-feature`)
-- Commit your changes with clear messages (e.g., `git commit -m "Add feature X"`)
-- Make your changes
-- Write tests for your changes
-- Submit a merge request
-- Use eslint for formatting and linting (``` npm run lint ```)
-
-## Authors and acknowledgment
-Group 7 Members-Cardiff University Software Engineering Course
-- 1846727 
-- 22033692
-- 22059852
-- 23044539
-- 23037459
-
-Special thanks to our module coordinator and teaching assistants for their support and guidance.
-
-## License
-None (for educational use only)
-
-## Project status
-Active development: Ongoing as part of Cardiff University's Software Engineering course.
-- Last updated: December 2025
-- Current version: 1.0.0
+[David Cole on GitHub](https://github.com/Coleybluebird07)
